@@ -1,11 +1,13 @@
+"""Script that initializes the database."""
 import os
 import sys
 import transaction
+import datetime
 
 from pyramid.paster import (
     get_appsettings,
     setup_logging,
-    )
+)
 
 from pyramid.scripts.common import parse_vars
 
@@ -14,11 +16,12 @@ from ..models import (
     get_engine,
     get_session_factory,
     get_tm_session,
-    )
-from ..models import MyModel
+)
+from ..models import BlogPost
 
 
 def usage(argv):
+    """Error print function."""
     cmd = os.path.basename(argv[0])
     print('usage: %s <config_uri> [var=value]\n'
           '(example: "%s development.ini")' % (cmd, cmd))
@@ -26,6 +29,7 @@ def usage(argv):
 
 
 def main(argv=sys.argv):
+    """Main db creation function."""
     if len(argv) < 2:
         usage(argv)
     config_uri = argv[1]
@@ -41,5 +45,9 @@ def main(argv=sys.argv):
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
 
-        model = MyModel(name='one', value=1)
+        model = BlogPost(
+            title='Test Title',
+            body='Test Body',
+            date=datetime.date.today()
+        )
         dbsession.add(model)

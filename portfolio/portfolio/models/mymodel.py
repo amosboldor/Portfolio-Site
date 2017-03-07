@@ -1,18 +1,30 @@
+"""The outlining of the portfolio app models."""
 from sqlalchemy import (
     Column,
     Index,
     Integer,
-    Text,
+    Unicode,
+    Date
 )
 
 from .meta import Base
 
 
-class MyModel(Base):
+class BlogPost(Base):
+    """Blog Post Model."""
+
     __tablename__ = 'models'
     id = Column(Integer, primary_key=True)
-    name = Column(Text)
-    value = Column(Integer)
+    title = Column(Unicode)
+    body = Column(Unicode)
+    date = Column(Date)
 
+    def to_json(self):
+        """JSON."""
+        return {
+            "title": self.title,
+            "body": self.body,
+            "date": self.date,
+        }
 
-Index('my_index', MyModel.name, unique=True, mysql_length=255)
+Index('my_index', BlogPost.id, unique=True, mysql_length=255)
