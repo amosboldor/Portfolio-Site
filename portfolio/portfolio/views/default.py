@@ -13,14 +13,14 @@ def my_view(request):
         one = query.filter(MyModel.name == 'one').first()
     except DBAPIError:
         return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'one': one, 'project': 'learning_journal'}
+    return {'one': one, 'project': 'portfolio'}
 
 
 db_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem
 might be caused by one of the following things:
 
-1.  You may need to run the "initialize_learning_journal_db" script
+1.  You may need to run the "initialize_portfolio_db" script
     to initialize your database tables.  Check your virtual
     environment's "bin" directory for this script and try to run it.
 

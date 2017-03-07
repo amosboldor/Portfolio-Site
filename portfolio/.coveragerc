@@ -1,0 +1,3 @@
+[run]
+source = portfolio
+omit = portfolio/test*

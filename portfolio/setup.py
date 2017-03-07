@@ -25,9 +25,9 @@ tests_require = [
     'pytest-cov',
     ]
 
-setup(name='learning_journal',
+setup(name='portfolio',
       version='0.0',
-      description='learning_journal',
+      description='portfolio',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
           "Programming Language :: Python",
@@ -48,8 +48,8 @@ setup(name='learning_journal',
       install_requires=requires,
       entry_points="""\
       [paste.app_factory]
-      main = learning_journal:main
+      main = portfolio:main
       [console_scripts]
-      initialize_learning_journal_db = learning_journal.scripts.initializedb:main
+      initialize_portfolio_db = portfolio.scripts.initializedb:main
       """,
       )
