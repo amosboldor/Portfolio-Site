@@ -1,3 +1,4 @@
+"""Setup File."""
 import os
 
 from setuptools import setup, find_packages
@@ -17,13 +18,18 @@ requires = [
     'transaction',
     'zope.sqlalchemy',
     'waitress',
-    ]
+    'ipython',
+    'pyramid_ipython',
+    'psycopg2',
+    'faker',
+    'passlib'
+]
 
 tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest',  # includes virtualenv
     'pytest-cov',
-    ]
+]
 
 setup(name='portfolio',
       version='0.0',
@@ -50,6 +56,6 @@ setup(name='portfolio',
       [paste.app_factory]
       main = portfolio:main
       [console_scripts]
-      initialize_portfolio_db = portfolio.scripts.initializedb:main
+      initialize_db = portfolio.scripts.initializedb:main
       """,
       )
