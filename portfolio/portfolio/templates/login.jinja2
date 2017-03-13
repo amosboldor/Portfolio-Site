@@ -1,0 +1,16 @@
+{% extends "layout.jinja2" %}
+{% block main %}
+<main class="container">
+    <div class="form-group">
+        <form  method="POST">
+            <label for="Username">Username:</label>
+            <input class="form-control" rows="5" id="Username" type="text" name="Username"></input>
+            <br>
+            <label for="Password">Password:</label>
+            <input class="form-control" rows="5" id="Password" type="password" name="Password"></input>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Submit"/>
+        </form>
+    </div>
+</main>
+{% endblock %}
