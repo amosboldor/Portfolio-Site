@@ -46,7 +46,7 @@ def includeme(config):
     auth_secret = os.environ.get('AUTH_SECRET', 'blahblah')
     authn_policy = AuthTktAuthenticationPolicy(
         secret=auth_secret,
-        hashalg='sha3'
+        hashalg='sha512'
     )
     authz_policy = ACLAuthorizationPolicy()
     config.set_authentication_policy(authn_policy)
