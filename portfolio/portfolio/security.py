@@ -37,7 +37,6 @@ class MyRoot(object):
         (Allow, Everyone, 'view'),
         (Allow, Authenticated, 'edit'),
         (Allow, Authenticated, 'create'),
-        (Allow, Authenticated, 'add')
     ]
 
 

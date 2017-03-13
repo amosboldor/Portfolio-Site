@@ -3,7 +3,65 @@ from pyramid.response import Response
 from pyramid.view import view_config
 from pyramid.security import remember, forget
 from ..security import check_credentials
+from sqlalchemy.exc import DBAPIError
 from pyramid.httpexceptions import HTTPFound
+from ..models import BlogPost
+import datetime
+
+
+@view_config(route_name="posts", renderer="../templates/posts.jinja2")
+def posts(request):
+    """View for listing all the posts."""
+    try:
+        query = request.dbsession.query(BlogPost)
+    except DBAPIError:
+        return Response('It don\'t work right.', content_type='text/plain', status=500)
+    return {'posts': query.all()[::-1]}
+
+
+@view_config(route_name="detail", renderer="../templates/post.jinja2")
+def detail(request):
+    """View for the detail page."""
+    query = request.dbsession.query(BlogPost)
+    post = query.filter(BlogPost.id == request.matchdict['id']).first()
+    return {"post": post}
+
+
+@view_config(route_name="create",
+             # renderer="../templates/new_BlogPost.jinja2",
+             permission="create")
+def create(request):
+    """View for new BlogPost page."""
+    if request.method == "POST":
+        post_dict_keys = list(request.POST.keys())
+        if "title" in post_dict_keys and "body" in post_dict_keys:
+            title = request.POST["title"]
+            body = request.POST["body"]
+            date = datetime.date.today()
+            new_model = BlogPost(title=title, body=body, date=date)
+            request.dbsession.add(new_model)
+            return HTTPFound(location=request.route_url('home'))
+    return {}
+
+
+@view_config(route_name="update",
+             # renderer="../templates/edit_BlogPost.jinja2",
+             permission="edit")
+def update(request):
+    """View for update page."""
+    if request.method == "POST":
+        title = request.POST["title"]
+        body = request.POST["body"]
+        date = datetime.date.today()
+        query = request.dbsession.query(BlogPost)
+        post_dict = query.filter(BlogPost.id == request.matchdict['id'])
+        post_dict.update({"title": title,
+                          "body": body,
+                          "date": date})
+        return HTTPFound(location=request.route_url('home'))
+    query = request.dbsession.query(BlogPost)
+    post_dict = query.filter(BlogPost.id == request.matchdict['id']).first()
+    return {"post": post_dict}
 
 
 @view_config(route_name='home', renderer='../templates/home.jinja2')

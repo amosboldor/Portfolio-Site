@@ -25,12 +25,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
           </button>
-          <a class="navbar-brand" href="#">Amos</a>
+          <a class="navbar-brand" href="{{ request.route_url('home') }}">Amos</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Projects</a></li>
-            <li><a href="#">Blog Posts</a></li>
+            <li><a href="{{ request.route_url('posts') }}">Blog Posts</a></li>
             <li><a href="#">Contact</a></li>
           </ul>
         </div>
@@ -45,7 +45,8 @@
 
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-
+    {% block script %}
+    {% endblock script %}
   </body>
 
 </html>

@@ -1,0 +1,60 @@
+{% extends "layout.jinja2" %}
+{% block content %}
+<main class="container">
+    {% if request.authenticated_userid %}
+    <div class="form-group">
+        <form>
+            <label for="Title">Title:</label>
+            <input required class="form-control" rows="5" id="Title" type="text" name="title"></input>
+            <br>
+            <label for="Entry">Entry:</label>
+            <textarea required class="form-control" rows="5" id="Entry" type="text" name="body"></textarea>
+            <br>
+            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+            <button type="button" id="cancel" class="btn btn-default">Cancel</button>
+        </form>
+    </div>
+    {% endif %}
+    <ul id="entries">
+      {% for post in posts %}
+        <li><a href="{{ request.route_url('detail', id=post.id) }}">{{ post.title }}</a> Created: {{ post.date}}</li>
+      {% endfor %}
+    </ul>
+</main>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+    var url_window = window.location.href
+    var d = new Date();
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+
+    var output = day + '/' +
+        ((''+month).length<2 ? '0' : '') + month + '/' + ((''+day).length<2 ? '0' : '') + d.getFullYear();
+    var csrfToken = "{{request.session.get_csrf_token()}}";
+    var submit = $("#submit");
+    submit.on("click", function(){
+        // send ajax request add entry
+        if ($('#Title').val() == '' || $('#Entry').val() == '') {
+            alert('Both the Title field and the textarea field need to be filled!')
+        } else {
+            $.ajax({
+            type: 'POST',
+            headers: { 'X-CSRF-Token': csrfToken },
+            url: 'blog/create',
+            data: {"title": $('#Title').val(), "body": $('#Entry').val()},
+            success: function(){
+                var num = $("#entries li").length + 1;
+                var full_url = url_window + '/' + num;
+                $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
+                $('#Title').val('')
+                $('#Entry').val('')
+            }
+        });
+        }
+    });
+});
+</script
+{% endblock %}
