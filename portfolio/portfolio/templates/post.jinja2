@@ -1,11 +1,24 @@
 {% extends "layout.jinja2" %}
+
+{% block head %}
+<link href="{{request.static_url('portfolio:static/monokai.css')}}" rel="stylesheet">
+{% endblock head %}
+
 {% block content %}
 <main class="container">
     <h1>{{ post.title }}</h1><a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ post.title }}" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <h2>Created: {{ post.date }}</h2>
-    <p>{{ post.body }}</p>
+    <div>{{ post.body|safe }}</div>
 {#     {% if request.authenticated_userid %}
     <a href="{{ request.route_url('update', id=post.id) }}"><button type="button" id="target" class="btn btn-primary">Edit</button></a>
     {% endif %} #}
 </main>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".codehilite>pre").attr('style', 'background-color:#333')
+})
+</script>
 {% endblock %}

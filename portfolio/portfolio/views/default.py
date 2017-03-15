@@ -7,6 +7,7 @@ from sqlalchemy.exc import DBAPIError
 from pyramid.httpexceptions import HTTPFound
 from ..models import BlogPost
 import datetime
+import markdown
 
 
 @view_config(route_name="posts", renderer="../templates/posts.jinja2")
@@ -28,7 +29,6 @@ def detail(request):
 
 
 @view_config(route_name="create",
-             # renderer="../templates/new_BlogPost.jinja2",
              permission="create")
 def create(request):
     """View for new BlogPost page."""
@@ -36,9 +36,10 @@ def create(request):
         post_dict_keys = list(request.POST.keys())
         if "title" in post_dict_keys and "body" in post_dict_keys:
             title = request.POST["title"]
-            body = request.POST["body"]
+            html = markdown.markdown(request.POST["body"],
+                                     extensions=['codehilite', 'tables'])
             date = datetime.date.today()
-            new_model = BlogPost(title=title, body=body, date=date)
+            new_model = BlogPost(title=title, body=html, date=date)
             request.dbsession.add(new_model)
             return HTTPFound(location=request.route_url('home'))
     return {}
