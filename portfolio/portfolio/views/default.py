@@ -8,6 +8,7 @@ from pyramid.httpexceptions import HTTPFound
 from ..models import BlogPost
 import datetime
 import markdown
+import html2text
 
 
 @view_config(route_name="posts", renderer="../templates/posts.jinja2")
@@ -62,6 +63,8 @@ def update(request):
         return HTTPFound(location=request.route_url('home'))
     query = request.dbsession.query(BlogPost)
     post_dict = query.filter(BlogPost.id == request.matchdict['id']).first()
+    ## html2text
+    import pdb; pdb.set_trace()
     return {"post": post_dict}
 
 
@@ -91,3 +94,19 @@ def logout(request):
     """Logout view."""
     headers = forget(request)
     return HTTPFound(request.route_url('home'), headers=headers)
+
+
+@view_config(route_name="api_list", renderer="json")
+def api_list_view(request):
+    """JSON."""
+    posts = request.dbsession.query(BlogPost).all()
+    output = [item.to_json() for item in posts]
+    return output
+
+
+@view_config(route_name="api_post", renderer="json")
+def api_post_view(request):
+    """JSON."""
+    query = request.dbsession.query(BlogPost)
+    post = query.filter(BlogPost.id == request.matchdict['id']).first()
+    return post.to_json()

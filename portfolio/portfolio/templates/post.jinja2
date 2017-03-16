@@ -7,18 +7,78 @@
 {% block content %}
 <main class="container">
     <h1>{{ post.title }}</h1><a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ post.title }}" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <h2>Created: {{ post.date }}</h2>
+    <h4>Created: {{ post.date }}</h4>
     <div>{{ post.body|safe }}</div>
-{#     {% if request.authenticated_userid %}
-    <a href="{{ request.route_url('update', id=post.id) }}"><button type="button" id="target" class="btn btn-primary">Edit</button></a>
-    {% endif %} #}
 </main>
+
+{% if request.authenticated_userid %}
+<div id="form" class="container" style="display: none;"/>    
+    <div class="form-group">
+        <form>
+            <label for="Title">Title:</label>
+            <input required class="form-control" rows="5" id="Title" type="text" name="title" value=""></input>
+            <br>
+            <label for="Entry">Entry:</label>
+            <textarea required class="form-control" rows="5" id="Entry" type="text" name="body"></textarea>
+            <br>
+            <button type="button" id="submit" class="btn btn-primary">Submit</button>
+            <button type="button" id="cancel" class="btn btn-default">Cancel</button>
+        </form>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block script %}
+
+{% if request.authenticated_userid %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".codehilite>pre").attr('style', 'background-color:#333')
+    $.getJSON("{{ request.route_url('api_post', id=post.id) }}", function( data ) {
+        $('#Title').val(data.title);
+        $('#Entry').val(data.body);
+    });
+    $('#form').show()
+    var url_window = window.location.href
+    var d = new Date();
+
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var simplemde = new SimpleMDE();
+
+    var output = day + '/' +
+        ((''+month).length<2 ? '0' : '') + month + '/' + ((''+day).length<2 ? '0' : '') + d.getFullYear();
+    var csrfToken = "{{request.session.get_csrf_token()}}";
+    var submit = $("#submit");
+
+    submit.on("click", function(){
+        // send ajax request add entry
+        if ($('#Title').val() == '' || simplemde.value() == '') {
+            alert('Both the Title field and the textarea field need to be filled!')
+        } else {
+            $.ajax({
+            type: 'POST',
+            headers: { 'X-CSRF-Token': csrfToken },
+            url: 'blog/create',
+            data: {"title": $('#Title').val(), "body": simplemde.value()},
+            success: function(){
+                var num = $("#entries li").length + 1;
+                var full_url = url_window + '/' + num;
+                $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
+                $('#Title').val('')
+                $('#Entry').val('')
+            }
+        });
+        }
+    });
+})
+</script>
+{% else %}
 <script type="text/javascript">
 $(document).ready(function(){
     $(".codehilite>pre").attr('style', 'background-color:#333')
 })
 </script>
+{% endif %}
 {% endblock %}

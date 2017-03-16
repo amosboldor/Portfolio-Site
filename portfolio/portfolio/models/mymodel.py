@@ -24,7 +24,7 @@ class BlogPost(Base):
         return {
             "title": self.title,
             "body": self.body,
-            "date": self.date,
+            "date": str(self.date),
         }
 
 Index('my_index', BlogPost.id, unique=True, mysql_length=255)

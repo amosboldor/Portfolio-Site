@@ -7,3 +7,5 @@ def includeme(config):
     config.add_route("posts", "/blog")
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
+    config.add_route('api_list', '/api/posts')
+    config.add_route('api_post', '/api/posts/{id:\d+}')
