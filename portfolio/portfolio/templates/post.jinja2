@@ -18,7 +18,7 @@
 <div class="container">
 <button type="button" id="edit" class="btn btn-primary">Edit</button>
 </div>
-<br>
+<hr>
 <div id="form" class="container" style="display: none;"/>    
     <div class="form-group">
         <form>
@@ -49,6 +49,13 @@ $(document).ready(function(){
         ((''+month).length<2 ? '0' : '') + month + '/' + ((''+day).length<2 ? '0' : '') + d.getFullYear();
     var csrfToken = "{{request.session.get_csrf_token()}}";
 
+    function getAndDisplay(title, body, date){
+        $('main>h1').text(title)
+        $('main>h4').html(body)
+        $('main>div').text(date)
+    };
+
+
     $('#edit').on('click', function(){
         $.getJSON("{{ request.route_url('api_post', id=post.id) }}?convert=True", function( data ) {
             $('#Title').val(data.title);
@@ -78,8 +85,9 @@ $(document).ready(function(){
                 var full_url = url_window + '/' + num;
                 $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
                 $('#edit').hide()
-                $('#Title').val('')
-                simplemde.value('')
+                $.getJSON("{{ request.route_url('api_post', id=post.id) }}?convert=True", function( data ) {
+                    getAndDisplay(data.title, data.html, data.date)
+                });
             }
         });
         }

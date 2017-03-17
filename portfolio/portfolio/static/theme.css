@@ -53,11 +53,20 @@ body {
 
 .page_row {
   display: table-row;
-  height: 160px;
 }
 .page_row>p {
-  margin: 0, auto;
+  display: block;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  margin-bottom: 0;
+  text-align:center; 
 }
 
 .page_row-expanded { height: 100%; }
-/*.row { margin: 0; padding: 0 }*/
+.row { margin: 0; padding: 0 }
+
+#footer {
+  height: 160px;
+  padding-top: 100%;
+  padding-bottom: 1%;
+}
