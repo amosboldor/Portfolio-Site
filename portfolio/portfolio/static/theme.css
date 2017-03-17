@@ -37,3 +37,27 @@
   .navbar-nav  li a:hover {
       color: #2980B9 !important;
   }
+  .codehilite>pre {
+    background-color:#333;
+  }
+
+html,
+body { 
+  height: 100%;
+}
+
+body {
+  display: table;
+  width: 100%;
+}
+
+.page_row {
+  display: table-row;
+  height: 160px;
+}
+.page_row>p {
+  margin: 0, auto;
+}
+
+.page_row-expanded { height: 100%; }
+/*.row { margin: 0; padding: 0 }*/
