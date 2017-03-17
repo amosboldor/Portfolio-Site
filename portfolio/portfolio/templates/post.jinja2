@@ -2,13 +2,17 @@
 
 {% block head %}
 <link href="{{request.static_url('portfolio:static/monokai.css')}}" rel="stylesheet">
+{% if request.authenticated_userid %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endif %}
 {% endblock head %}
 
 {% block content %}
 <main class="container">
     <h1>{{ post.title }}</h1><a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ post.title }}" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
     <h4>Created: {{ post.date }}</h4>
-    <div>{{ post.body|safe }}</div>
+    <div>{{ post.html|safe }}</div>
 </main>
 
 {% if request.authenticated_userid %}
@@ -35,9 +39,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $(".codehilite>pre").attr('style', 'background-color:#333')
-    $.getJSON("{{ request.route_url('api_post', id=post.id) }}", function( data ) {
+    $.getJSON("{{ request.route_url('api_post', id=post.id) }}?convert=True", function( data ) {
         $('#Title').val(data.title);
-        $('#Entry').val(data.body);
+        simplemde.value(data.body);
     });
     $('#form').show()
     var url_window = window.location.href
@@ -60,14 +64,14 @@ $(document).ready(function(){
             $.ajax({
             type: 'POST',
             headers: { 'X-CSRF-Token': csrfToken },
-            url: 'blog/create',
+            url: "{{ request.route_url('update', id=post.id) }}",
             data: {"title": $('#Title').val(), "body": simplemde.value()},
             success: function(){
                 var num = $("#entries li").length + 1;
                 var full_url = url_window + '/' + num;
                 $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
                 $('#Title').val('')
-                $('#Entry').val('')
+                simplemde.value('')
             }
         });
         }

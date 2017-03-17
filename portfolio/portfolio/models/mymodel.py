@@ -17,6 +17,7 @@ class BlogPost(Base):
     id = Column(Integer, primary_key=True)
     title = Column(Unicode)
     body = Column(Unicode)
+    html = Column(Unicode)
     date = Column(Date)
 
     def to_json(self):
@@ -24,6 +25,7 @@ class BlogPost(Base):
         return {
             "title": self.title,
             "body": self.body,
+            "html": self.html,
             "date": str(self.date),
         }
 

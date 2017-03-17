@@ -5,10 +5,10 @@ from pyramid.security import remember, forget
 from ..security import check_credentials
 from sqlalchemy.exc import DBAPIError
 from pyramid.httpexceptions import HTTPFound
+from bs4 import BeautifulSoup
 from ..models import BlogPost
 import datetime
 import markdown
-import html2text
 
 
 @view_config(route_name="posts", renderer="../templates/posts.jinja2")
@@ -40,7 +40,7 @@ def create(request):
             html = markdown.markdown(request.POST["body"],
                                      extensions=['codehilite', 'tables'])
             date = datetime.date.today()
-            new_model = BlogPost(title=title, body=html, date=date)
+            new_model = BlogPost(title=title, body=request.POST["body"], html=html, date=date)
             request.dbsession.add(new_model)
             return HTTPFound(location=request.route_url('home'))
     return {}
@@ -53,19 +53,15 @@ def update(request):
     """View for update page."""
     if request.method == "POST":
         title = request.POST["title"]
-        body = request.POST["body"]
-        date = datetime.date.today()
+        html = markdown.markdown(request.POST["body"],
+                                 extensions=['codehilite', 'tables'])
         query = request.dbsession.query(BlogPost)
         post_dict = query.filter(BlogPost.id == request.matchdict['id'])
         post_dict.update({"title": title,
-                          "body": body,
-                          "date": date})
+                          "body": request.POST["body"],
+                          "html": html})
         return HTTPFound(location=request.route_url('home'))
-    query = request.dbsession.query(BlogPost)
-    post_dict = query.filter(BlogPost.id == request.matchdict['id']).first()
-    ## html2text
-    import pdb; pdb.set_trace()
-    return {"post": post_dict}
+    return {}
 
 
 @view_config(route_name='home', renderer='../templates/home.jinja2')
@@ -109,4 +105,5 @@ def api_post_view(request):
     """JSON."""
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
-    return post.to_json()
+    post = post.to_json()
+    return post

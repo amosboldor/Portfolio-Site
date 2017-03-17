@@ -69,7 +69,22 @@ class TestViewsSuccessCondition(BaseTest):
     def test_home_page_200(self):
         """Test home get 200 code."""
         response = self.testapp.get('/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
+
+    def test_blog_200(self):
+        """Test blog get 200 code."""
+        response = self.testapp.get('/blog')
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_posts_200(self):
+        """Test api posts 200 code."""
+        response = self.testapp.get('/api/posts')
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_post_200(self):
+        """Test api post 200 code."""
+        response = self.testapp.get('/api/posts/', params={"id": 1})
+        self.assertEqual(response.status_code, 200)
 
 
 class TestViewsFailureCondition(BaseTest):

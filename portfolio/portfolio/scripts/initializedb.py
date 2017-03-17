@@ -48,6 +48,7 @@ def main(argv=sys.argv):
         model = BlogPost(
             title='Test Title',
             body='Test Body',
+            html='<p>Test Body</p>',
             date=datetime.date.today()
         )
         dbsession.add(model)

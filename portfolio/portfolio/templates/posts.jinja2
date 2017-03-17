@@ -58,7 +58,7 @@ $(document).ready(function(){
                 var full_url = url_window + '/' + num;
                 $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
                 $('#Title').val('')
-                $('#Entry').val('')
+                simplemde.value('')
             }
         });
         }
