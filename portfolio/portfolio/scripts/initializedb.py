@@ -16,8 +16,8 @@ from ..models import (
     get_engine,
     get_session_factory,
     get_tm_session,
+    BlogPost
 )
-from ..models import BlogPost
 
 
 def usage(argv):

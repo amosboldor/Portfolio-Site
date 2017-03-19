@@ -71,7 +71,7 @@ body {
   padding-bottom: 1%;
 }
 
-.loader {
+/*.loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
@@ -91,4 +91,17 @@ body {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}*/
+
+.progress {
+    display: block;
+    text-align: center;
+    width: 0;
+    height: 3px;
+    background: red;
+    transition: width .3s;
+}
+.progress.hide {
+    opacity: 0;
+    transition: opacity 1.3s;
 }

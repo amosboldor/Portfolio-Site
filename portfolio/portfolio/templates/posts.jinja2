@@ -1,14 +1,22 @@
 {% extends "layout.jinja2" %}
 
 {% block head %}
+<link href="{{request.static_url('portfolio:static/monokai.css')}}" rel="stylesheet">
+{% if request.authenticated_userid %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endif %}
 {% endblock head %}
 
 {% block content %}
 <main class="container">
     {% if request.authenticated_userid %}
-    <div class="form-group">
+    <br>
+    <div id="add">
+        <button type="button" class="btn btn-primary btn-block">Add</button>
+        <br>
+    </div>
+    <div class="form-group" id="form" style="display: none;">
         <form>
             <label for="Title">Title:</label>
             <input required class="form-control" rows="5" id="Title" type="text" name="title"></input>
@@ -21,15 +29,22 @@
         </form>
     </div>
     {% endif %}
-    <ul id="entries">
+    <div id="entries">
       {% for post in posts %}
-        <li><a href="{{ request.route_url('detail', id=post.id) }}">{{ post.title }}</a> Created: {{ post.date}}</li>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h2><a style="color: #2c3e50;" href="{{ request.route_url('detail', id=post.id) }}">{{ post.title }}</a></h2>
+              Created: {{ post.date}}
+          </div>
+          <div class="panel-body">{{ post.summary|safe }}</div>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
 </main>
 {% endblock %}
 
 {% block script %}
+{% if request.authenticated_userid %}
 <script type="text/javascript">
 $(document).ready(function(){
     var url_window = window.location.href
@@ -39,6 +54,17 @@ $(document).ready(function(){
     var day = d.getDate();
     var simplemde = new SimpleMDE();
 
+    $('#cancel').on('click', function(){
+        $('#form').slideUp()
+        $('#add').slideDown()
+        window.scroll(0,0)
+    });
+
+    $('#add').on('click', function(){
+        $('#form').slideDown()
+        $('#add').slideUp()
+        window.scroll(0,0)
+    })
     var output = day + '/' +
         ((''+month).length<2 ? '0' : '') + month + '/' + ((''+day).length<2 ? '0' : '') + d.getFullYear();
     var csrfToken = "{{request.session.get_csrf_token()}}";
@@ -65,4 +91,5 @@ $(document).ready(function(){
     });
 });
 </script>
+{% endif %}
 {% endblock %}

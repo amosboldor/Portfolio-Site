@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from ..models import BlogPost
 import datetime
 import markdown
+import json
 
 
 @view_config(route_name="posts", renderer="../templates/posts.jinja2")
@@ -16,9 +17,17 @@ def posts(request):
     """View for listing all the posts."""
     try:
         query = request.dbsession.query(BlogPost)
+        posts = []
+        for x in query.all()[::-1]:
+            posts.append({
+                "title": x.title,
+                "date": str(x.date),
+                    "summary": getSummary(x.html),
+                "id": x.id
+            })
     except DBAPIError:
         return Response('It don\'t work right.', content_type='text/plain', status=500)
-    return {'posts': query.all()[::-1]}
+    return {'posts': posts}
 
 
 @view_config(route_name="detail", renderer="../templates/post.jinja2")
@@ -27,7 +36,6 @@ def detail(request):
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
     return {"post": post}
-
 
 @view_config(route_name="create",
              permission="create")
@@ -99,11 +107,19 @@ def api_list_view(request):
     output = [item.to_json() for item in posts]
     return output
 
+def getSummary(html):
+    """Return summary portion of BlogPost."""
+    soup = BeautifulSoup(html, "html5lib")
+    if not soup.summary:
+        return html
+    return str(soup.summary)
 
 @view_config(route_name="api_post", renderer="json")
 def api_post_view(request):
     """JSON."""
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
+    if request.params.get('summary') == 'True':
+        return json.dumps({"summary": getSummary(post.html)})
     post = post.to_json()
     return post

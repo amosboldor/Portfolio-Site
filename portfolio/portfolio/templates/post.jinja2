@@ -9,20 +9,21 @@
 {% endblock head %}
 
 {% block content %}
+<div class="progress"></div>
 <main class="container">
     <div id="wrapper">
         <h1>{{ post.title }}</h1><a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ post.title }}" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         <h4>Created: {{ post.date }}</h4>
         <div>{{ post.html|safe }}</div>
     </div>
-    <div class="loader" style="display: none;"></div>
+    {# <div class="loading" style="width: 50%"></div> #}
 </main>
 {% if request.authenticated_userid %}
 <div class="container">
 <button type="button" id="edit" class="btn btn-primary">Edit</button>
 </div>
 <hr>
-<div id="form" class="container" style="display: none;"/>    
+<div id="form" class="container" style="display: none;"/>
     <div class="form-group">
         <form>
             <label for="Title">Title:</label>
@@ -43,18 +44,16 @@
 {% if request.authenticated_userid %}
 <script type="text/javascript">
 $(document).ready(function(){
-    var width = 100, // width of a progress bar in percentage
-    perfData = window.performance.timing, // The PerformanceTiming interface
-    EstimatedTime = -(perfData.loadEventEnd - perfData.navigationStart), // Calculated Estimated Time of Page Load which returns negative value.
-    time = parseInt((EstimatedTime/1000)%60)*100; //Converting EstimatedTime from miliseconds to seconds.
-
     var simplemde = new SimpleMDE();
     var url_window = window.location.href
     var d = new Date();
     var month = d.getMonth()+1;
     var day = d.getDate();
     var output = day + '/' +
-        ((''+month).length<2 ? '0' : '') + month + '/' + ((''+day).length<2 ? '0' : '') + d.getFullYear();
+        ((''+month).length<2 ? '0' : '') +
+        month + '/' +
+        ((''+day).length<2 ? '0' : '') +
+        d.getFullYear();
     var csrfToken = "{{request.session.get_csrf_token()}}";
 
     function getAndDisplay(title, body, date){
@@ -63,9 +62,8 @@ $(document).ready(function(){
         $('main>div>div').text(date)
     };
 
-
     $('#edit').on('click', function(){
-        $.getJSON("{{ request.route_url('api_post', id=post.id) }}?convert=True", function( data ) {
+        $.getJSON("{{ request.route_url('api_post', id=post.id) }}", function( data ) {
             $('#Title').val(data.title);
             simplemde.value(data.body);
         });
@@ -74,22 +72,22 @@ $(document).ready(function(){
     });
 
     $('#cancel').on('click', function(){
-        $('#cancel').slideDown()
         $('#form').slideUp()
         $('#edit').slideDown()
     });
+
     $("#submit").on("click", function(){
         // send ajax request add entry
         if ($('#Title').val() == '' || simplemde.value() == '') {
             alert('Both the Title field and the textarea field need to be filled!')
         } else {
+            $('.wrapper').slideUp()
             $.ajax({
             type: 'POST',
             headers: { 'X-CSRF-Token': csrfToken },
             url: "{{ request.route_url('update', id=post.id) }}",
             data: {"title": $('#Title').val(), "body": simplemde.value()},
             success: function(){
-                $('.wrapper').slideUp()
                 $('.loader').slideDown()
                 var num = $("#entries li").length + 1;
                 var full_url = url_window + '/' + num;
@@ -99,16 +97,13 @@ $(document).ready(function(){
                     getAndDisplay(data.title, data.html, data.date)
                     $('.loader').slideUp()
                 });
+                $('#form').slideUp()
+                $('#edit').slideDown()
+                window.scroll(0,0)
             }
         });
         }
     });
-})
-</script>
-{% else %}
-<script type="text/javascript">
-$(document).ready(function(){
-    
 })
 </script>
 {% endif %}
