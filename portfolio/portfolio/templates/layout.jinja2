@@ -10,6 +10,7 @@
     <title>My Portfolio</title>
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{request.static_url('portfolio:static/theme.css')}}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
     {% block head %}
     {% endblock head %}
     <!--[if lt IE 9]>
@@ -27,7 +28,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
           </button>
-          <a class="navbar-brand" href="{{ request.route_url('home') }}">Amos</a>
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#hireMe">Hire Me</button>
+          <a class="navbar-brand" href="{{ request.route_url('home') }}">Amos Boldor</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
@@ -43,6 +45,36 @@
     {% endblock content %}
     </div>
 
+    <div class="modal fade" id="hireMe" role="dialog">
+      <div class="modal-dialog">
+      
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Hire Me</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="email">From:</label>
+                <input type="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="Message">Message:</label>
+                <button type="button" class="btn btn-sm" id="markdown">Use Markdown</button>
+                <button type="button" class="btn btn-sm" id="dropmarkdown" style="display: none;">Turn Off Markdown</button>
+                <textarea required class="form-control" rows="5" id="Message" type="text" name="body" placeholder="Message"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
 
     <footer class="container-fluid navbar navbar-default bg-4 text-center page_row">
       <p>GitHub: <a href="https://github.com/amosboldor">amosboldor</a></p> 
@@ -52,6 +84,61 @@
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     {% block script %}
     {% endblock script %}
+    <script>
+    var simplemde
+    function turnOffMarkdown(simplemde){
+        simplemde.toTextArea();
+        simplemde = null;
+    };
+    $(document).ready(function(){
+      $.extend({
+          loadCssAndJs: function(type, url, callback, nocache){
+              if (typeof nocache=='undefined') nocache=false; // default don't refresh
+                  if (type === "css") {
+                    var tag = '<link>'
+                    var data = {rel:'stylesheet', type:'text/css', 'href':url}
+                  } else if (type === 'js'){
+                    var tag = '<script>'
+                    var data = {'src': url, 'type': "text/javascript"}
+                  }
+              $.when(
+                $(tag, data).appendTo('head')
+              ).then(function(){
+                  if (typeof callback=='function') callback();
+              });
+          }
+      });
+
+      var adderss = 'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.'
+      $('#markdown').on('click', function(){
+        var css = $('link[' + "href$=" + '"' + adderss + 'css' + '"' + ']').length
+        var js = $('script[' + "src$=" + '"' + adderss + 'js' + '"' + ']').length
+        if (css && js) {
+          simplemde = new SimpleMDE({ element: $('textarea')[0] });
+          simplemde.value($('textarea').val());
+          $('#markdown').hide()
+          $('#dropmarkdown').show()
+        } else {
+          $.loadCssAndJs('css', adderss + 'css')
+          $.loadCssAndJs('js', adderss + 'js')
+          var myVar = setInterval(function(){ 
+            if (typeof SimpleMDE !== "undefined"){
+              simplemde = new SimpleMDE();
+              simplemde.value($('textarea').val());
+              clearInterval(myVar);
+              $('#markdown').hide()
+              $('#dropmarkdown').show()
+            }
+          }, 100);
+        }
+      });
+      $('#dropmarkdown').on('click', function(){
+          turnOffMarkdown(simplemde);
+          $('#dropmarkdown').hide()
+          $('#markdown').show()
+      });
+    });
+    </script>
   </body>
 
 </html>

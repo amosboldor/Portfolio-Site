@@ -35,7 +35,7 @@ class MyRoot(object):
 
     __acl__ = [
         (Allow, Everyone, 'view'),
-        (Allow, Authenticated, 'edit'),
+        (Allow, Authenticated, 'update'),
         (Allow, Authenticated, 'create'),
     ]
 

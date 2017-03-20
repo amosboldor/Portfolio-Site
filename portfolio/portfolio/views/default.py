@@ -12,6 +12,14 @@ import markdown
 import json
 
 
+def get_summary(html):
+    """Return summary portion of BlogPost."""
+    soup = BeautifulSoup(html, "html5lib")
+    if not soup.summary:
+        return html
+    return str(soup.summary)
+
+
 @view_config(route_name="posts", renderer="../templates/posts.jinja2")
 def posts(request):
     """View for listing all the posts."""
@@ -22,7 +30,7 @@ def posts(request):
             posts.append({
                 "title": x.title,
                 "date": str(x.date),
-                    "summary": getSummary(x.html),
+                "summary": get_summary(x.html),
                 "id": x.id
             })
     except DBAPIError:
@@ -36,6 +44,7 @@ def detail(request):
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
     return {"post": post}
+
 
 @view_config(route_name="create",
              permission="create")
@@ -55,8 +64,7 @@ def create(request):
 
 
 @view_config(route_name="update",
-             # renderer="../templates/edit_BlogPost.jinja2",
-             permission="edit")
+             permission="update")
 def update(request):
     """View for update page."""
     if request.method == "POST":
@@ -107,12 +115,6 @@ def api_list_view(request):
     output = [item.to_json() for item in posts]
     return output
 
-def getSummary(html):
-    """Return summary portion of BlogPost."""
-    soup = BeautifulSoup(html, "html5lib")
-    if not soup.summary:
-        return html
-    return str(soup.summary)
 
 @view_config(route_name="api_post", renderer="json")
 def api_post_view(request):
@@ -120,6 +122,23 @@ def api_post_view(request):
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
     if request.params.get('summary') == 'True':
-        return json.dumps({"summary": getSummary(post.html)})
+        return json.dumps({"summary": get_summary(post.html)})
     post = post.to_json()
     return post
+
+
+@view_config(route_name="hire_me", renderer="json")
+def hire_me(request):
+    """Send email and text for hire me button."""
+    if request.method == "POST":
+        post_dict_keys = list(request.POST.keys())
+        import pdb; pdb.set_trace()
+        if "title" in post_dict_keys and "body" in post_dict_keys:
+            title = request.POST["title"]
+            html = markdown.markdown(request.POST["body"],
+                                     extensions=['codehilite', 'tables'])
+            date = datetime.date.today()
+            new_model = BlogPost(title=title, body=request.POST["body"], html=html, date=date)
+            request.dbsession.add(new_model)
+            return HTTPFound(location=request.route_url('home'))
+    return {}
