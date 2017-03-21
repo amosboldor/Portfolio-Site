@@ -1,11 +1,12 @@
 """Testing File."""
-import unittest
-import transaction
 import datetime
+import unittest
+
+import transaction
+from portfolio.models import get_tm_session
 from portfolio.models.meta import Base
 from pyramid import testing
 from webtest import TestApp
-from portfolio.models import get_tm_session
 
 
 def dummy_request(dbsession):
@@ -35,7 +36,8 @@ class BaseTest(unittest.TestCase):
         engine = session_factory.kw['bind']
         Base.metadata.create_all(engine)
 
-    def tear_down(self):
+    @staticmethod
+    def tear_down():
         """Teardown and abort."""
         testing.tearDown()
         transaction.abort()

@@ -1,15 +1,17 @@
 """Views for profolio app."""
-from pyramid.response import Response
-from pyramid.view import view_config
-from pyramid.security import remember, forget
-from ..security import check_credentials
-from sqlalchemy.exc import DBAPIError
-from pyramid.httpexceptions import HTTPFound
-from bs4 import BeautifulSoup
-from ..models import BlogPost
 import datetime
-import markdown
 import json
+
+import markdown
+from bs4 import BeautifulSoup
+from pyramid.httpexceptions import HTTPFound
+from pyramid.response import Response
+from pyramid.security import remember, forget
+from pyramid.view import view_config
+from sqlalchemy.exc import DBAPIError
+
+from ..models import BlogPost
+from ..security import check_credentials
 
 
 def get_summary(html):
@@ -20,6 +22,7 @@ def get_summary(html):
     return str(soup.summary)
 
 
+# noinspection PyShadowingNames
 @view_config(route_name="posts", renderer="../templates/posts.jinja2")
 def posts(request):
     """View for listing all the posts."""
@@ -108,6 +111,7 @@ def logout(request):
     return HTTPFound(request.route_url('home'), headers=headers)
 
 
+# noinspection PyShadowingNames
 @view_config(route_name="api_list", renderer="json")
 def api_list_view(request):
     """JSON."""
