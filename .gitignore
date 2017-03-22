@@ -93,3 +93,5 @@ ENV/
 .idea/vcs.xml
 .idea/workspace.xml
 portfolio/portfolio.sqlite
+mail/
+.idea

@@ -12,6 +12,7 @@ from sqlalchemy.exc import DBAPIError
 
 from ..models import BlogPost
 from ..security import check_credentials
+from pyramid_mailer.message import Message
 
 
 def get_summary(html):
@@ -131,18 +132,20 @@ def api_post_view(request):
     return post
 
 
-@view_config(route_name="hire_me", renderer="json")
+@view_config(route_name="email", renderer="json", require_csrf=False)
 def hire_me(request):
     """Send email and text for hire me button."""
     if request.method == "POST":
         post_dict_keys = list(request.POST.keys())
-        import pdb; pdb.set_trace()
-        if "title" in post_dict_keys and "body" in post_dict_keys:
-            title = request.POST["title"]
+        if "email" in post_dict_keys and "body" in post_dict_keys:
+            email = request.POST["email"]
             html = markdown.markdown(request.POST["body"],
-                                     extensions=['codehilite', 'tables'])
-            date = datetime.date.today()
-            new_model = BlogPost(title=title, body=request.POST["body"], html=html, date=date)
-            request.dbsession.add(new_model)
-            return HTTPFound(location=request.route_url('home'))
+                                     extensions=['tables'])
+            subject = request.POST["subject"]
+            message = Message(subject=subject,
+                              sender='admin@mysite.com',
+                              recipients=["amosboldor@gmail.com"],
+                              body=html)
+            request.mailer.send(message)
+            return {}
     return {}

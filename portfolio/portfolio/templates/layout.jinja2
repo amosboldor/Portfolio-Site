@@ -60,12 +60,16 @@
                 <input type="email" class="form-control" id="email" placeholder="Email">
               </div>
               <div class="form-group">
+                <label for="subject">Title:</label>
+                <input type="text" id="subject" class="form-control" name="subject" id="title" placeholder="Title">
+              </div>
+              <div class="form-group">
                 <label for="Message">Message:</label>
                 <button type="button" class="btn btn-sm" id="markdown">Use Markdown</button>
                 <button type="button" class="btn btn-sm" id="dropmarkdown" style="display: none;">Turn Off Markdown</button>
                 <textarea required class="form-control" rows="5" id="Message" type="text" name="body" placeholder="Message"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" id="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
           <div class="modal-footer">
@@ -132,10 +136,30 @@
           }, 100);
         }
       });
+      function sendData(data){
+        $.ajax({
+        type: 'POST',
+        url: "{{ request.route_url('email') }}",
+        data: data,
+        success: function(){
+            console.log("Sent and emailed: ", data)
+            $('.modal').modal("hide")
+          }
+        });
+      };
       $('#dropmarkdown').on('click', function(){
           turnOffMarkdown(simplemde);
           $('#dropmarkdown').hide()
           $('#markdown').show()
+      });
+      $("#submit").on('click', function(){
+        var data = {"email": $("#email").val(), "subject":$("#subject").val()}
+        if (typeof SimpleMDE !== "undefined"){
+          data["body"] = simplemde.value();
+        } else {
+          data["body"] = $('textarea').val()
+        }
+        sendData(data)
       });
     });
     </script>

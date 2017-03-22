@@ -80,13 +80,13 @@ $(document).ready(function(){
             url: 'blog/create',
             data: {"title": $('#Title').val(), "body": simplemde.value()},
             success: function(){
-                var num = $("#entries li").length + 1;
-                var full_url = url_window + '/' + num;
-                $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
-                $('#Title').val('')
-                simplemde.value('')
-            }
-        });
+                    var num = $("#entries li").length + 1;
+                    var full_url = url_window + '/' + num;
+                    $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
+                    $('#Title').val('')
+                    simplemde.value('')
+                }
+            });
         }
     });
 });
