@@ -1,6 +1,7 @@
 """Testing File."""
 import datetime
 import unittest
+import json
 
 import transaction
 from portfolio.models import get_tm_session, BlogPost
@@ -87,14 +88,37 @@ class TestViewsSuccessCondition(BaseTest):
         response = self.testapp.get('/logout')
         self.assertEqual(response.status_code, 302)
 
+    def test_individual_blog_post_route_shows_post(self):
+        """Test individual blog post route shows post."""
+        response = self.testapp.get('/blog/1')
+        self.assertTrue("Test Title" in response)
+        self.assertTrue("Test Body" in response)
+        self.assertTrue(str(datetime.date.today()) in response)
+
+    def test_api_individual_blog_posts_200_is_correct_post(self):
+        """Test api post route 200 code is correct post."""
+        response = self.testapp.get('/api/posts/1')
+        post_json = response.json
+        post_in_db = {
+            'date': str(datetime.date.today()),
+            'title': 'Test Title',
+            'body': 'Test Body',
+            'html': '<p>Test Body</p>'
+        }
+        self.assertEqual(post_json, post_in_db)
+
 
 class TestViewsFailureCondition(BaseTest):
     """Test Views Failure Condition."""
 
-    def test_individual_blog_post_route_wrong_id(self):
+    def test_individual_blog_post_route_404_wrong_id(self):
         """Test individual blog post route 404 code wrong id."""
         response = self.testapp.get('/blog/2', status=404)
         self.assertEqual(response.status_code, 404)
 
+    def test_api_individual_blog_posts_404_wrong_id(self):
+        """Test api post route 404 code wrong id."""
+        response = self.testapp.get('/api/posts/2', status=404)
+        self.assertEqual(response.status_code, 404)
 if __name__ == '__main__':
     unittest.main()
