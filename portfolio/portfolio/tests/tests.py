@@ -3,10 +3,12 @@ import datetime
 import unittest
 
 import transaction
-from portfolio.models import get_tm_session
+from portfolio.models import get_tm_session, BlogPost
 from portfolio.models.meta import Base
+from portfolio import main
 from pyramid import testing
 from webtest import TestApp
+from bs4 import BeautifulSoup
 
 
 def dummy_request(dbsession):
@@ -17,45 +19,9 @@ def dummy_request(dbsession):
 class BaseTest(unittest.TestCase):
     """Base Test with db setup."""
 
-    def setUp(self):
-        """Setup the db."""
-        self.config = testing.setUp(settings={
-            'sqlalchemy.url': 'sqlite:///:memory:'
-        })
-        self.config.include('..models')
-        self.config.include('..routes')
-
-        session_factory = self.config.registry['dbsession_factory']
-        self.session = get_tm_session(session_factory, transaction.manager)
-
-        self.init_database()
-
-    def init_database(self):
-        """Init Database."""
-        session_factory = self.config.registry['dbsession_factory']
-        engine = session_factory.kw['bind']
-        Base.metadata.create_all(engine)
-
-    @staticmethod
-    def tear_down():
-        """Teardown and abort."""
-        testing.tearDown()
-        transaction.abort()
-
-
-class TestViewsSuccessCondition(unittest.TestCase):
-    """Test Views Success Condition."""
-
     @classmethod
     def setUp(cls):
         """Add to database."""
-        from portfolio.models.meta import Base
-        from portfolio import main
-        from portfolio.models import (
-            get_tm_session,
-            BlogPost
-        )
-
         settings = {
             'sqlalchemy.url': 'sqlite:///:memory:'
         }
@@ -81,6 +47,10 @@ class TestViewsSuccessCondition(unittest.TestCase):
         """Tear down database."""
         from portfolio.models.meta import Base
         Base.metadata.drop_all(bind=cls.engine)
+
+
+class TestViewsSuccessCondition(BaseTest):
+    """Test Views Success Condition."""
 
     def test_home_page_200(self):
         """Test home get 200 code."""
@@ -121,7 +91,10 @@ class TestViewsSuccessCondition(unittest.TestCase):
 class TestViewsFailureCondition(BaseTest):
     """Test Views Failure Condition."""
 
-    pass
+    def test_individual_blog_post_route_wrong_id(self):
+        """Test individual blog post route 404 code wrong id."""
+        response = self.testapp.get('/blog/2', status=404)
+        self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':
     unittest.main()

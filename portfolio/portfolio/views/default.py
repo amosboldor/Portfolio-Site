@@ -13,6 +13,7 @@ from sqlalchemy.exc import DBAPIError
 from ..models import BlogPost
 from ..security import check_credentials
 from pyramid_mailer.message import Message
+from pyramid.httpexceptions import HTTPNotFound
 
 
 def get_summary(html):
@@ -47,7 +48,9 @@ def detail(request):
     """View for the detail page."""
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
-    return {"post": post}
+    if post:
+        return {"post": post}
+    return HTTPNotFound()
 
 
 @view_config(route_name="create",
@@ -118,7 +121,9 @@ def api_list_view(request):
     """JSON."""
     posts = request.dbsession.query(BlogPost).all()
     output = [item.to_json() for item in posts]
-    return output
+    if output:
+        return output
+    return HTTPNotFound()
 
 
 @view_config(route_name="api_post", renderer="json")
@@ -126,10 +131,12 @@ def api_post_view(request):
     """JSON."""
     query = request.dbsession.query(BlogPost)
     post = query.filter(BlogPost.id == request.matchdict['id']).first()
-    if request.params.get('summary') == 'True':
-        return json.dumps({"summary": get_summary(post.html)})
-    post = post.to_json()
-    return post
+    if post:
+        if request.params.get('summary') == 'True':
+            return json.dumps({"summary": get_summary(post.html)})
+        post = post.to_json()
+        return post
+    return HTTPNotFound()
 
 
 @view_config(route_name="email", renderer="json", require_csrf=False)
@@ -137,7 +144,7 @@ def hire_me(request):
     """Send email and text for hire me button."""
     if request.method == "POST":
         post_dict_keys = list(request.POST.keys())
-        if "email" in post_dict_keys and "body" in post_dict_keys:
+        if "email" in post_dict_keys and "body" in post_dict_keys and "subject" in post_dict_keys:
             email = request.POST["email"]
             html = markdown.markdown(request.POST["body"],
                                      extensions=['tables'])
@@ -145,7 +152,7 @@ def hire_me(request):
             message = Message(subject=subject,
                               sender='admin@mysite.com',
                               recipients=["amosboldor@gmail.com"],
-                              body=html)
+                              body=email + '\n' + html)
             request.mailer.send(message)
             return {}
     return {}
