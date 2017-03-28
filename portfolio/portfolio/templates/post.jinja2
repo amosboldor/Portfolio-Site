@@ -16,14 +16,13 @@
         <h4>Created: {{ post.date }}</h4>
         <div>{{ post.html|safe }}</div>
     </div>
-    {# <div class="loading" style="width: 50%"></div> #}
 </main>
 {% if request.authenticated_userid %}
 <div class="container">
 <button type="button" id="edit" class="btn btn-primary">Edit</button>
 </div>
-<hr>
 <div id="form" class="container" style="display: none;"/>
+<hr>
     <div class="form-group">
         <form>
             <label for="Title">Title:</label>

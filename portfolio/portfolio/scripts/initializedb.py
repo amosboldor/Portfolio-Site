@@ -35,6 +35,8 @@ def main(argv=sys.argv):
     options = parse_vars(argv[2:])
     setup_logging(config_uri)
     settings = get_appsettings(config_uri, options=options)
+    sql_url = os.environ.get('DATABASE_URL', 'sqlite:///BlogPostDB.sqlite')
+    settings["sqlalchemy.url"] = sql_url
 
     engine = get_engine(settings)
     Base.metadata.create_all(engine)
