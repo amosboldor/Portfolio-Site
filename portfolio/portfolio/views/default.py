@@ -169,3 +169,11 @@ def hire_me(request):
             request.mailer.send(message)
             return {}
     return {}
+
+
+@view_config(route_name='projects',
+             renderer='../templates/projects.jinja2',
+             permission='view')
+def projects(request):
+    """Display projects."""
+    return {}
