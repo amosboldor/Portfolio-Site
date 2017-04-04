@@ -10,3 +10,4 @@ def includeme(config):
     config.add_route('api_list', '/api/posts')
     config.add_route('api_post', '/api/posts/{id:\d+}')
     config.add_route('email', '/hire-me')
+    config.add_route('projects', '/projects')
