@@ -24,8 +24,9 @@ def get_summary(html):
     return str(soup.summary)
 
 
-# noinspection PyShadowingNames
-@view_config(route_name="posts", renderer="../templates/posts.jinja2")
+@view_config(route_name="posts",
+             renderer="../templates/posts.jinja2",
+             permission="view")
 def posts(request):
     """View for listing all the posts."""
     try:
@@ -43,7 +44,9 @@ def posts(request):
     return {'posts': posts}
 
 
-@view_config(route_name="detail", renderer="../templates/post.jinja2")
+@view_config(route_name="detail",
+             renderer="../templates/post.jinja2",
+             permission="view")
 def detail(request):
     """View for the detail page."""
     query = request.dbsession.query(BlogPost)
@@ -87,7 +90,9 @@ def update(request):
     return {}
 
 
-@view_config(route_name='home', renderer='../templates/home.jinja2')
+@view_config(route_name='home',
+             renderer='../templates/home.jinja2',
+             permission="view")
 def home(request):
     """Home Page View."""
     return {}
@@ -95,7 +100,8 @@ def home(request):
 
 @view_config(route_name='login',
              renderer='../templates/login.jinja2',
-             require_csrf=False)
+             require_csrf=False,
+             permission="view")
 def login(request):
     """Login View."""
     if request.method == 'POST':
@@ -108,15 +114,17 @@ def login(request):
     return {}
 
 
-@view_config(route_name='logout')
+@view_config(route_name='logout',
+             permission="view")
 def logout(request):
     """Logout view."""
     headers = forget(request)
     return HTTPFound(request.route_url('home'), headers=headers)
 
 
-# noinspection PyShadowingNames
-@view_config(route_name="api_list", renderer="json")
+@view_config(route_name="api_list",
+             renderer="json",
+             permission="view")
 def api_list_view(request):
     """JSON."""
     posts = request.dbsession.query(BlogPost).all()
@@ -126,7 +134,9 @@ def api_list_view(request):
     return HTTPNotFound()
 
 
-@view_config(route_name="api_post", renderer="json")
+@view_config(route_name="api_post",
+             renderer="json",
+             permission="view")
 def api_post_view(request):
     """JSON."""
     query = request.dbsession.query(BlogPost)
@@ -139,7 +149,10 @@ def api_post_view(request):
     return HTTPNotFound()
 
 
-@view_config(route_name="email", renderer="json", require_csrf=False)
+@view_config(route_name="email",
+             renderer="json",
+             require_csrf=False,
+             permission="view")
 def hire_me(request):
     """Send email and text for hire me button."""
     if request.method == "POST":
