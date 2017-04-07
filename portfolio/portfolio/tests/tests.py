@@ -2,7 +2,7 @@
 import datetime
 import unittest
 import json
-
+import re
 import transaction
 from portfolio.models import get_tm_session, BlogPost
 from portfolio.models.meta import Base
@@ -88,6 +88,11 @@ class TestViewsSuccessCondition(BaseTest):
         response = self.testapp.get('/logout')
         self.assertEqual(response.status_code, 302)
 
+    def test_project_200(self):
+        """Test project route 200 code."""
+        response = self.testapp.get('/projects')
+        self.assertEqual(response.status_code, 200)
+
     def test_individual_blog_post_route_shows_post(self):
         """Test individual blog post route shows post."""
         response = self.testapp.get('/blog/1')
@@ -107,6 +112,23 @@ class TestViewsSuccessCondition(BaseTest):
         }
         self.assertEqual(post_json, post_in_db)
 
+    def test_delete_post(self):
+        """Test delete post deletes post."""
+        response = self.testapp.get('/blog')
+        self.assertTrue("Test Title" in response)
+        self.assertTrue("Test Body" in response)
+        self.assertTrue(str(datetime.date.today()) in response)
+
+        self.testapp.post('/login', params={'Username': 'amos', 'Password': 'password'})
+        script_tag = self.testapp.get('/blog').html.find_all("script")[4].string
+        csrfToken = re.findall('var csrfToken = (.*?);\s*$', script_tag, re.M)[0][1:-1]
+        self.testapp.delete('/blog/1/delete', headers={'X-CSRF-Token': csrfToken})
+
+        response = self.testapp.get('/blog')
+        self.assertFalse("Test Title" in response)
+        self.assertFalse("Test Body" in response)
+        self.assertFalse(str(datetime.date.today()) in response)
+
 
 class TestViewsFailureCondition(BaseTest):
     """Test Views Failure Condition."""
@@ -120,5 +142,7 @@ class TestViewsFailureCondition(BaseTest):
         """Test api post route 404 code wrong id."""
         response = self.testapp.get('/api/posts/2', status=404)
         self.assertEqual(response.status_code, 404)
+
+
 if __name__ == '__main__':
     unittest.main()
