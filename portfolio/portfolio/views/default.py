@@ -177,3 +177,14 @@ def hire_me(request):
 def projects(request):
     """Display projects."""
     return {}
+
+
+@view_config(route_name='delete',
+             permission='delete')
+def delete_post(request):
+    """Delete a blog post."""
+    if request.method == "DELETE":
+        query = request.dbsession.query(BlogPost)
+        post = query.filter(BlogPost.id == request.matchdict['id']).first()
+        request.dbsession.delete(post)
+    return {}
