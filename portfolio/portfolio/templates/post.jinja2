@@ -20,6 +20,7 @@
 {% if request.authenticated_userid %}
 <div class="container">
 <button type="button" id="edit" class="btn btn-primary">Edit</button>
+<button type="button" id="delete" class="btn btn-danger">Delete</button>
 </div>
 <div id="form" class="container" style="display: none;"/>
 <hr>
@@ -75,6 +76,19 @@ $(document).ready(function(){
         $('#edit').slideDown()
     });
 
+    $('#delete').on('click', function(){
+        if (confirm("Press OK if you are sure that you want to delete this post")) {
+            $.ajax({
+                type: "DELETE",
+                url: "{{ request.route_url('delete', id=post.id) }}",
+                headers: { 'X-CSRF-Token': csrfToken },
+                success: function(){
+                    window.location.replace("{{ request.route_url('posts') }}");
+                }
+            })
+        }
+    });
+
     $("#submit").on("click", function(){
         // send ajax request add entry
         if ($('#Title').val() == '' || simplemde.value() == '') {
@@ -82,25 +96,25 @@ $(document).ready(function(){
         } else {
             $('.wrapper').slideUp()
             $.ajax({
-            type: 'POST',
-            headers: { 'X-CSRF-Token': csrfToken },
-            url: "{{ request.route_url('update', id=post.id) }}",
-            data: {"title": $('#Title').val(), "body": simplemde.value()},
-            success: function(){
-                $('.loader').slideDown()
-                var num = $("#entries li").length + 1;
-                var full_url = url_window + '/' + num;
-                $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
-                $('#edit').slideUp()
-                $.getJSON("{{ request.route_url('api_post', id=post.id) }}?convert=True", function( data ) {
-                    getAndDisplay(data.title, data.html, data.date)
-                    $('.loader').slideUp()
-                });
-                $('#form').slideUp()
-                $('#edit').slideDown()
-                window.scroll(0,0)
-            }
-        });
+                type: 'POST',
+                headers: { 'X-CSRF-Token': csrfToken },
+                url: "{{ request.route_url('update', id=post.id) }}",
+                data: {"title": $('#Title').val(), "body": simplemde.value()},
+                success: function(){
+                    $('.loader').slideDown()
+                    var num = $("#entries li").length + 1;
+                    var full_url = url_window + '/' + num;
+                    $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
+                    $('#edit').slideUp()
+                    $.getJSON("{{ request.route_url('api_post', id=post.id) }}?convert=True", function( data ) {
+                        getAndDisplay(data.title, data.html, data.date)
+                        $('.loader').slideUp()
+                    });
+                    $('#form').slideUp()
+                    $('#edit').slideDown()
+                    window.scroll(0,0)
+                }
+            });
         }
     });
 })

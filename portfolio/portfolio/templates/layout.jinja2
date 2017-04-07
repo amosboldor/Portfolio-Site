@@ -85,8 +85,6 @@
 
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    {% block script %}
-    {% endblock script %}
     <script>
     var simplemde
     function turnOffMarkdown(simplemde){
@@ -162,6 +160,8 @@
       });
     });
     </script>
+    {% block script %}
+    {% endblock script %}
   </body>
 
 </html>

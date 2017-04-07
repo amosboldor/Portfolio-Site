@@ -187,4 +187,5 @@ def delete_post(request):
         query = request.dbsession.query(BlogPost)
         post = query.filter(BlogPost.id == request.matchdict['id']).first()
         request.dbsession.delete(post)
+        return HTTPFound(location=request.route_url('home'))
     return {}
