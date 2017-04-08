@@ -63,7 +63,7 @@ class TestViewsSuccessCondition(BaseTest):
         response = self.testapp.get('/blog')
         self.assertEqual(response.status_code, 200)
 
-    def test_individual_blog_post_route(self):
+    def test_individual_blog_post_route_200(self):
         """Test individual blog post route 200 code."""
         response = self.testapp.get('/blog/1')
         self.assertEqual(response.status_code, 200)
@@ -93,6 +93,13 @@ class TestViewsSuccessCondition(BaseTest):
         response = self.testapp.get('/projects')
         self.assertEqual(response.status_code, 200)
 
+    def test_posts_route_shows_posts(self):
+        """Test posts route shows posts."""
+        response = self.testapp.get('/blog/1')
+        self.assertTrue("Test Title" in response)
+        self.assertTrue("Test Body" in response)
+        self.assertTrue(str(datetime.date.today()) in response)
+
     def test_individual_blog_post_route_shows_post(self):
         """Test individual blog post route shows post."""
         response = self.testapp.get('/blog/1')
@@ -111,6 +118,18 @@ class TestViewsSuccessCondition(BaseTest):
             'html': '<p>Test Body</p>'
         }
         self.assertEqual(post_json, post_in_db)
+
+    def test_api_blog_posts_200_is_correct_posts(self):
+        """Test api blog posts 200 is correct posts."""
+        response = self.testapp.get('/api/posts')
+        post_json = response.json
+        post_in_db = {
+            'date': str(datetime.date.today()),
+            'title': 'Test Title',
+            'body': 'Test Body',
+            'html': '<p>Test Body</p>'
+        }
+        self.assertEqual(post_json[0], post_in_db)
 
     def test_delete_post(self):
         """Test delete post deletes post."""
