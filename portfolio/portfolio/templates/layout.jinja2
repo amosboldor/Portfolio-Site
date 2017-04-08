@@ -35,6 +35,13 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ request.route_url('projects') }}">Projects</a></li>
             <li><a href="{{ request.route_url('posts') }}">Blog Posts</a></li>
+            {% if request.authenticated_userid %}
+            <li><a href="{{ request.route_url('logout') }}">
+              <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+              </button>
+            </a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -85,6 +92,7 @@
 
     <script src="//oss.maxcdn.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    {% if not request.authenticated_userid %}
     <script>
     var simplemde
     function turnOffMarkdown(simplemde){
@@ -160,6 +168,7 @@
       });
     });
     </script>
+    {% endif %}
     {% block script %}
     {% endblock script %}
   </body>
