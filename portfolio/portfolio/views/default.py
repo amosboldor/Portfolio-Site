@@ -109,7 +109,7 @@ def login(request):
         password = request.params.get('Password', '')
         if check_credentials(username, password):
             headers = remember(request, username)
-            return HTTPFound(location=request.route_url('home'),
+            return HTTPFound(location=request.route_url('posts'),
                              headers=headers)
     return {}
 
