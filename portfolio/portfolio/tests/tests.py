@@ -1,7 +1,6 @@
 """Testing File."""
 import datetime
 import unittest
-import json
 import re
 import transaction
 from portfolio.models import get_tm_session, BlogPost
@@ -9,7 +8,6 @@ from portfolio.models.meta import Base
 from portfolio import main
 from pyramid import testing
 from webtest import TestApp
-from bs4 import BeautifulSoup
 
 
 def dummy_request(dbsession):
@@ -139,7 +137,7 @@ class TestViewsSuccessCondition(BaseTest):
         self.assertTrue(str(datetime.date.today()) in response)
 
         self.testapp.post('/login', params={'Username': 'amos', 'Password': 'password'})
-        script_tag = self.testapp.get('/blog').html.find_all("script")[4].string
+        script_tag = self.testapp.get('/blog').html.find_all("script")[3].string
         csrfToken = re.findall('var csrfToken = (.*?);\s*$', script_tag, re.M)[0][1:-1]
         self.testapp.delete('/blog/1/delete', headers={'X-CSRF-Token': csrfToken})
 
@@ -161,6 +159,21 @@ class TestViewsFailureCondition(BaseTest):
         """Test api post route 404 code wrong id."""
         response = self.testapp.get('/api/posts/2', status=404)
         self.assertEqual(response.status_code, 404)
+
+    def test_cannot_create_without_login(self):
+        """Test cannot create without login."""
+        response = self.testapp.post('/blog/create', status=403)
+        self.assertEqual(response.status_code, 403)
+
+    def test_cannot_delete_without_login(self):
+        """Test cannot delete without login."""
+        response = self.testapp.post('/blog/1/delete', status=403)
+        self.assertEqual(response.status_code, 403)
+
+    def test_cannot_edit_without_login(self):
+        """Test cannot edit without login."""
+        response = self.testapp.post('/blog/1/edit', status=403)
+        self.assertEqual(response.status_code, 403)
 
 
 if __name__ == '__main__':
