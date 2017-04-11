@@ -94,7 +94,7 @@
     <script src="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     {% if not request.authenticated_userid %}
     <script>
-    var simplemde
+    var simplemde;
     function turnOffMarkdown(simplemde){
         simplemde.toTextArea();
         simplemde = null;
@@ -147,8 +147,15 @@
         url: "{{ request.route_url('email') }}",
         data: data,
         success: function(){
-            console.log("Sent and emailed: ", data)
-            $('.modal').modal("hide")
+            console.log("Sent and emailed: ", data);
+            $('.modal').modal("hide");
+            $("#email").val('')
+            $("#subject").val('')
+            if (typeof SimpleMDE !== "undefined"){
+              simplemde.value('');
+            } else {
+              $('textarea').val('')
+            }
           }
         });
       };
