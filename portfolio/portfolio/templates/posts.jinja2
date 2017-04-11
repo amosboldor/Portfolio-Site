@@ -22,7 +22,7 @@
             <input required class="form-control" rows="5" id="Title" type="text" name="title"></input>
             <br>
             <label for="Entry">Entry:</label>
-            <textarea required class="form-control" rows="5" id="Entry" type="text" name="body"><summary></summary></textarea>
+            <textarea required class="form-control" rows="5" id="Entry" type="text" name="body"></textarea>
             <br>
             <button type="button" id="submit" class="btn btn-primary">Submit</button>
             <button type="button" id="cancel" class="btn btn-default">Cancel</button>
@@ -53,6 +53,7 @@ $(document).ready(function(){
     var month = d.getMonth()+1;
     var day = d.getDate();
     var simplemde = new SimpleMDE();
+    simplemde.value('<summary></summary>')
 
     function hidePostForm(){
         $('#form').slideUp()
