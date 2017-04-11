@@ -65,8 +65,16 @@ $(document).ready(function(){
         $('#add').slideUp()
         window.scroll(0,0)
     })
-    var output = day + '/' +
-        ((''+month).length<2 ? '0' : '') + month + '/' + ((''+day).length<2 ? '0' : '') + d.getFullYear();
+
+    function genPost(url, title, date, summary) {
+        return '<div class="panel panel-primary"><div class="panel-heading"><h2><a style="color: #2c3e50;" href="' + url + '">' + title + '</a></h2>Created: ' + date + '</div><div class="panel-body">' + summary + '</div></div>'
+    }
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1;
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
     var csrfToken = "{{request.session.get_csrf_token()}}";
     var submit = $("#submit");
     submit.on("click", function(){
@@ -79,12 +87,17 @@ $(document).ready(function(){
             headers: { 'X-CSRF-Token': csrfToken },
             url: 'blog/create',
             data: {"title": $('#Title').val(), "body": simplemde.value()},
-            success: function(){
-                    var num = $("#entries li").length + 1;
-                    var full_url = url_window + '/' + num;
-                    $("#entries").append('<li><a href="' + full_url + '">' + $('#Title').val() + '</a> Created: ' + output + '</li>');
+            success: function(resp){
+                    console.log(simplemde.value())
+                    var full_url = url_window + '/' + resp.id;
+                    var title = $('#Title').val();
+                    var todaysDate = year + "-" + month + "-" + day;
+                    var summary = $(simplemde.value()).html()
+
+                    $("#entries").append(genPost(full_url, title, todaysDate, summary));
+
                     $('#Title').val('')
-                    simplemde.value('')
+                    simplemde.value('<summary></summary>')
                 }
             });
         }
