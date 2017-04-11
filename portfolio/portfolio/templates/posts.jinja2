@@ -54,11 +54,13 @@ $(document).ready(function(){
     var day = d.getDate();
     var simplemde = new SimpleMDE();
 
-    $('#cancel').on('click', function(){
+    function hidePostForm(){
         $('#form').slideUp()
         $('#add').slideDown()
         window.scroll(0,0)
-    });
+    }
+
+    $('#cancel').on('click', hidePostForm);
 
     $('#add').on('click', function(){
         $('#form').slideDown()
@@ -98,6 +100,7 @@ $(document).ready(function(){
 
                     $('#Title').val('')
                     simplemde.value('<summary></summary>')
+                    hidePostForm()
                 }
             });
         }
