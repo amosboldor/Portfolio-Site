@@ -48,10 +48,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
     var url_window = window.location.href
-    var d = new Date();
-
-    var month = d.getMonth()+1;
-    var day = d.getDate();
     var simplemde = new SimpleMDE();
     simplemde.value('<summary></summary>')
 
@@ -74,14 +70,10 @@ $(document).ready(function(){
     }
 
     var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1;
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
 
     var csrfToken = "{{request.session.get_csrf_token()}}";
-    var submit = $("#submit");
-    submit.on("click", function(){
-        // send ajax request add entry
+
+    $("#submit").on("click", function(){
         if ($('#Title').val() == '' || simplemde.value() == '') {
             alert('Both the Title field and the textarea field need to be filled!')
         } else {
@@ -91,13 +83,12 @@ $(document).ready(function(){
             url: 'blog/create',
             data: {"title": $('#Title').val(), "body": simplemde.value()},
             success: function(resp){
-                    console.log(simplemde.value())
                     var full_url = url_window + '/' + resp.id;
                     var title = $('#Title').val();
-                    var todaysDate = year + "-" + month + "-" + day;
+                    var todaysDate = dateObj.toISOString().slice(0,10);
                     var summary = $(simplemde.value()).html()
 
-                    $("#entries").append(genPost(full_url, title, todaysDate, summary));
+                    $("#entries").prepend(genPost(full_url, title, todaysDate, summary));
 
                     $('#Title').val('')
                     simplemde.value('<summary></summary>')
