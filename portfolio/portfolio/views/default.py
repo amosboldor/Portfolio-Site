@@ -57,6 +57,7 @@ def detail(request):
 
 
 @view_config(route_name="create",
+             renderer="json",
              permission="create")
 def create(request):
     """View for new BlogPost page."""
@@ -69,7 +70,8 @@ def create(request):
             date = datetime.date.today()
             new_model = BlogPost(title=title, body=request.POST["body"], html=html, date=date)
             request.dbsession.add(new_model)
-            return HTTPFound(location=request.route_url('home'))
+            id = request.dbsession.query(BlogPost).filter(BlogPost.title == title).first().id
+            return {"id": id}
     return {}
 
 
