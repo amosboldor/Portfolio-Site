@@ -64,9 +64,10 @@ def create(request):
     if request.method == "POST":
         post_dict_keys = list(request.POST.keys())
         if "title" in post_dict_keys and "body" in post_dict_keys:
+            extensions = ['markdown.extensions.codehilite', 'markdown.extensions.tables']
             title = request.POST["title"]
             html = markdown.markdown(request.POST["body"],
-                                     extensions=['codehilite', 'tables'])
+                                     extensions=extensions)
             date = datetime.date.today()
             new_model = BlogPost(title=title, body=request.POST["body"], html=html, date=date)
             request.dbsession.add(new_model)

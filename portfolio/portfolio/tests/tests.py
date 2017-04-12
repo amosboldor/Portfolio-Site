@@ -146,6 +146,25 @@ class TestViewsSuccessCondition(BaseTest):
         self.assertFalse("Test Body" in response)
         self.assertFalse(str(datetime.date.today()) in response)
 
+    def test_create_post_route(self):
+        """Test create post route."""
+        post = {
+            "title": "Bob Dole",
+            "body": "So funny story."
+        }
+        response = self.testapp.get('/blog')
+        self.assertFalse(post["title"] in response)
+        self.assertFalse(post["body"] in response)
+
+        self.testapp.post('/login', params={'Username': 'amos', 'Password': 'password'})
+        script_tag = self.testapp.get('/blog').html.find_all("script")[3].string
+        csrfToken = re.findall('var csrfToken = (.*?);\s*$', script_tag, re.M)[0][1:-1]
+        self.testapp.post('/blog/create', post, headers={'X-CSRF-Token': csrfToken})
+
+        response = self.testapp.get('/blog')
+        self.assertTrue(post["title"] in response)
+        self.assertTrue(post["body"] in response)
+
 
 class TestViewsFailureCondition(BaseTest):
     """Test Views Failure Condition."""
