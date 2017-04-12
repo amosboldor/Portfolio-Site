@@ -16,6 +16,9 @@ from pyramid_mailer.message import Message
 from pyramid.httpexceptions import HTTPNotFound
 
 
+extensions = ['markdown.extensions.codehilite', 'markdown.extensions.tables']
+
+
 def get_summary(html):
     """Return summary portion of BlogPost."""
     soup = BeautifulSoup(html, "html5lib")
@@ -64,7 +67,6 @@ def create(request):
     if request.method == "POST":
         post_dict_keys = list(request.POST.keys())
         if "title" in post_dict_keys and "body" in post_dict_keys:
-            extensions = ['markdown.extensions.codehilite', 'markdown.extensions.tables']
             title = request.POST["title"]
             html = markdown.markdown(request.POST["body"],
                                      extensions=extensions)
@@ -83,7 +85,7 @@ def update(request):
     if request.method == "POST":
         title = request.POST["title"]
         html = markdown.markdown(request.POST["body"],
-                                 extensions=['codehilite', 'tables'])
+                                 extensions=extensions)
         query = request.dbsession.query(BlogPost)
         post_dict = query.filter(BlogPost.id == request.matchdict['id'])
         post_dict.update({"title": title,
