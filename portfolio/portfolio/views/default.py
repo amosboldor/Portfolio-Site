@@ -165,7 +165,7 @@ def hire_me(request):
         if "email" in post_dict_keys and "body" in post_dict_keys and "subject" in post_dict_keys:
             email = request.POST["email"]
             html = markdown.markdown(request.POST["body"],
-                                     extensions=['tables'])
+                                     extensions=extensions)
             subject = request.POST["subject"]
             message = Message(subject=subject,
                               sender='admin@mysite.com',
