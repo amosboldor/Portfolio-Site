@@ -5,19 +5,19 @@
   }
   p {font-size: 16px;}
   .margin {margin-bottom: 45px;}
-  .bg-1 { 
+  .bg-1 {
       background-color: #2980B9;
       color: #ECF0F1;
   }
-  .bg-2 { 
+  .bg-2 {
       background-color: #2C3E50;
       color: #ECF0F1;
   }
-  .bg-3 { 
+  .bg-3 {
       background-color: #E74C3C;
       color: #555555;
   }
-  .bg-4 { 
+  .bg-4 {
       background-color: #2C3E50;
       color: #fff;
   }
@@ -56,7 +56,7 @@
   }
 
 html,
-body { 
+body {
   height: 100%;
 }
 
@@ -73,7 +73,7 @@ body {
   padding-top: 10%;
   padding-bottom: 10%;
   margin-bottom: 0;
-  text-align:center; 
+  text-align:center;
 }
 
 .page_row-expanded { height: 100%; }
@@ -83,39 +83,4 @@ body {
   height: 160px;
   padding-top: 100%;
   padding-bottom: 1%;
-}
-
-/*.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  display: block;
-  margin: auto;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}*/
-
-.progress {
-    display: block;
-    text-align: center;
-    width: 0;
-    height: 3px;
-    background: red;
-    transition: width .3s;
-}
-.progress.hide {
-    opacity: 0;
-    transition: opacity 1.3s;
 }
