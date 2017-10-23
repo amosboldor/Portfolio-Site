@@ -1,31 +1,28 @@
-{% extends "layout.jinja2" %}
-
-{% block content %}
+{% extends "layout.jinja2" %} {% block content %}
 <a target="_blank" href="http://trollpy.herokuapp.com">
-<div class="container-fluid bg-1 text-center">
-  <h3 class="margin">TrollPy</h3>
-  <div class="row">
-    <div class="col-sm-4">
-      <img src="{{request.static_url('portfolio:static/trollpy.png')}}" class="img-responsive" style="display:inline" width="350" height="350">
-      http://trollpy.herokuapp.com/
+    <div class="container-fluid bg-1 text-center">
+        <h3 class="margin">TrollPy</h3>
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="{{request.static_url('portfolio:static/trollpy.png')}}" class="img-responsive" style="display:inline" width="350" height="350"> http://trollpy.herokuapp.com/
+            </div>
+            <div class="col-sm-4">
+                <p>TrollPy is an interactive bot that will deliver the appropriate amount of trash talk relative to how well or poorly you are performing in a game of chess against it. Not only will it display the trash talk but it will say it outloud. Every single time and admin adds a trash talk phrase it will generate a mp3 file which then gets used to say the phrase at the right time. We set in place a way so that when add trash talk you have to add a level of severity so the bot will say harsher trash talk based on how well your doing.</p>
+            </div>
+            <span>Tools</span>
+            <div class="col-sm-4 text-left">
+                <ul>
+                    <li>Python-Chess</li>
+                    <li>Chess.js</li>
+                    <li>Chessboard.js</li>
+                    <li>gTTS</li>
+                    <li>jQuery</li>
+                    <li>Python</li>
+                    <li>Zurb Foundation</li>
+                    <li>Pyramid Framework</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-4">
-      <p>TrollPy is an interactive bot that will deliver the appropriate amount of trash talk relative to how well or poorly you are performing in a game of chess against it. Not only will it display the trash talk but it will say it outloud. Every single time and admin adds a trash talk phrase it will generate a mp3 file which then gets used to say the phrase at the right time. We set in place a way so that when add trash talk you have to add a level of severity so the bot will say harsher trash talk based on how well your doing.</p>
-    </div>
-    <span>Tools</span>
-    <div class="col-sm-4 text-left">
-      <ul>
-        <li>Python-Chess</li>
-        <li>Chess.js</li>
-        <li>Chessboard.js</li>
-        <li>gTTS</li>
-        <li>jQuery</li>
-        <li>Python</li>
-        <li>Zurb Foundation</li>
-        <li>Pyramid Framework</li>
-      </ul>
-    </div>
-  </div>
-</div>
 </a>
 {% endblock content %}

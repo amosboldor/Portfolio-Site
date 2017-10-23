@@ -95,3 +95,4 @@ ENV/
 portfolio/portfolio.sqlite
 mail/
 .idea
+*.sqlite

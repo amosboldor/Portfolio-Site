@@ -71,9 +71,15 @@ def create(request):
             html = markdown.markdown(request.POST["body"],
                                      extensions=extensions)
             date = datetime.date.today()
-            new_model = BlogPost(title=title, body=request.POST["body"], html=html, date=date)
+            new_model = BlogPost(
+                title=title,
+                body=request.POST["body"],
+                html=html,
+                date=date
+            )
             request.dbsession.add(new_model)
-            id = request.dbsession.query(BlogPost).filter(BlogPost.title == title).first().id
+            id = request.dbsession.query(BlogPost).filter(
+                BlogPost.title == title).first().id
             return {"id": id}
     return {}
 

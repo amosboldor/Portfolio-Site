@@ -1,14 +1,8 @@
-{% extends "layout.jinja2" %}
-
-{% block head %}
-<link href="{{request.static_url('portfolio:static/monokai.css')}}" rel="stylesheet">
-{% if request.authenticated_userid %}
+{% extends "layout.jinja2" %} {% block head %}
+<link href="{{request.static_url('portfolio:static/monokai.css')}}" rel="stylesheet"> {% if request.authenticated_userid %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-{% endif %}
-{% endblock head %}
-
-{% block content %}
+{% endif %} {% endblock head %} {% block content %}
 <main class="container">
     {% if request.authenticated_userid %}
     <br>
@@ -30,39 +24,35 @@
     </div>
     {% endif %}
     <div id="entries">
-      {% for post in posts %}
+        {% for post in posts %}
         <div class="panel panel-primary">
-          <div class="panel-heading">
-              <h2><a style="color: #2c3e50;" href="{{ request.route_url('detail', id=post.id) }}">{{ post.title }}</a></h2>
-              Created: {{ post.date}}
-          </div>
-          <div class="panel-body">{{ post.summary|safe }}</div>
+            <div class="panel-heading">
+                <h2><a style="color: #2c3e50;" href="{{ request.route_url('detail', id=post.id) }}">{{ post.title }}</a></h2> Created: {{ post.date}}
+            </div>
+            <div class="panel-body">{{ post.summary|safe }}</div>
         </div>
-      {% endfor %}
+        {% endfor %}
     </div>
 </main>
-{% endblock %}
-
-{% block script %}
-{% if request.authenticated_userid %}
+{% endblock %} {% block script %} {% if request.authenticated_userid %}
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function() {
     var url_window = window.location.href
     var simplemde = new SimpleMDE();
     simplemde.value('<summary></summary>')
 
-    function hidePostForm(){
+    function hidePostForm() {
         $('#form').slideUp()
         $('#add').slideDown()
-        window.scroll(0,0)
+        window.scroll(0, 0)
     }
 
     $('#cancel').on('click', hidePostForm);
 
-    $('#add').on('click', function(){
+    $('#add').on('click', function() {
         $('#form').slideDown()
         $('#add').slideUp()
-        window.scroll(0,0)
+        window.scroll(0, 0)
     })
 
     function genPost(url, title, date, summary) {
@@ -73,19 +63,19 @@ $(document).ready(function(){
 
     var csrfToken = "{{request.session.get_csrf_token()}}";
 
-    $("#submit").on("click", function(){
+    $("#submit").on("click", function() {
         if ($('#Title').val() == '' || simplemde.value() == '') {
             alert('Both the Title field and the textarea field need to be filled!')
         } else {
             $.ajax({
-            type: 'POST',
-            headers: { 'X-CSRF-Token': csrfToken },
-            url: 'blog/create',
-            data: {"title": $('#Title').val(), "body": simplemde.value()},
-            success: function(resp){
+                type: 'POST',
+                headers: { 'X-CSRF-Token': csrfToken },
+                url: 'blog/create',
+                data: { "title": $('#Title').val(), "body": simplemde.value() },
+                success: function(resp) {
                     var full_url = url_window + '/' + resp.id;
                     var title = $('#Title').val();
-                    var todaysDate = dateObj.toISOString().slice(0,10);
+                    var todaysDate = dateObj.toISOString().slice(0, 10);
                     var summary = $(simplemde.value()).html()
 
                     $("#entries").prepend(genPost(full_url, title, todaysDate, summary));
@@ -99,5 +89,4 @@ $(document).ready(function(){
     });
 });
 </script>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}
