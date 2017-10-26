@@ -1,15 +1,43 @@
 {% extends "layout.jinja2" %} {% block content %}
-<main class="container">
-    <div class="form-group">
-        <form method="POST">
-            <label for="Username">Username:</label>
-            <input class="form-control" rows="5" id="Username" type="text" name="Username"></input>
-            <br>
-            <label for="Password">Password:</label>
-            <input class="form-control" rows="5" id="Password" type="password" name="Password"></input>
-            <br>
-            <input class="btn btn-primary" type="submit" value="Submit" />
-        </form>
-    </div>
-</main>
+<div class="container">
+    <form class="form-horizontal" role="form" method="POST">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h2 class="text-center">Login</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                    <label class="sr-only" for="username">Username</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon"><i class="material-icons">face</i></div>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username" required autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="sr-only" for="password">Password</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon"><i class="material-icons">vpn_key</i></div>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

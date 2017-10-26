@@ -1,92 +1,98 @@
-<!DOCTYPE html>
-<html lang="{{request.locale_name}}">
+<!doctype html>
+<html lang="en">
 
 <head>
+    <title>{% block title %}Amos Boldor - Portfolio{% endblock title %}</title>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio">
-    <meta name="author" content="Amos Boldor">
-    <link rel="shortcut icon" href="{{request.static_url('portfolio:static/icon.png')}}" type="image/x-icon" />
-    <title>My Portfolio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link href="{{request.static_url('portfolio:static/theme.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet"> {% block head %} {% endblock head %}
-    <!--[if lt IE 9]>
-      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{request.static_url('portfolio:static/font/css/open-iconic-bootstrap.min.css')}}"> {% block head %} {% endblock head %}
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#hireMe">Hire Me</button>
-                <a class="navbar-brand" href="{{ request.route_url('home') }}">Amos Boldor</a>
+    <nav class="navbar navbar-dark bg-primary sticky-top navbar-expand-lg">
+        <a class="navbar-brand" href="/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/718smiley.svg/500px-718smiley.svg.png" width="30" height="30" class="d-inline-block align-top"> Amos Boldor</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color:white;"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <div class="form-inline my-2 my-lg-0">
+              <button type="button" class="btn btn-secondary btn-success align-middle" data-toggle="modal" data-target="#hireMe">Hire Me</button>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ request.route_url('projects') }}">Projects</a></li>
-                    <li><a href="{{ request.route_url('posts') }}">Blog Posts</a></li>
-                    {% if request.authenticated_userid %}
-                    <li>
-                        <a href="{{ request.route_url('logout') }}">
-                            <button type="button" class="btn btn-default btn-sm">
-                                <span class="glyphicon glyphicon-log-out"></span> Log out
-                            </button>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ request.route_url('projects') }}">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ request.route_url('posts') }}">Blog</a>
+                </li>
+            </ul>
+            {% if request.authenticated_userid %}
+            <span class="navbar-text">
+                <a style="text-decoration: none;" href="{{ request.route_url('logout') }}">
+                    <span class="oi oi-account-logout"></span>
+            <span> Logout - {{ request.authenticated_userid }}</span>
+            </a>
+            </span>
+            {% elif request.authenticated_userid or request.current_route_url() != request.route_url('login') %}
+            <span class="navbar-text">
+                <a style="text-decoration: none;" href="{{ request.route_url('login') }}">
+                    <span class="oi oi-account-login"></span>
+            <span> Login</span>
+            </a>
+            </span>
+            {% endif %}
     </nav>
-    <div class="page_row page_row-expanded">
-        {% block content %} {% endblock content %}
-    </div>
-    <div class="modal fade" id="hireMe" role="dialog">
-        <div class="modal-dialog">
+    <br> {% block content %} {% endblock content %}
+    <!-- Modal -->
+    <div class="modal fade" id="hireMe" tabindex="-1" role="dialog" aria-labelledby="hireMeLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Hire Me</h4>
+                    <h5 class="modal-title" id="hireMeLabel">Hire Me</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="email">From:</label>
+                            <h4><label for="email">From:</label></h3>
                             <input type="email" class="form-control" id="email" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <label for="subject">Title:</label>
+                            <h4><label for="subject">Title:</label></h3>
                             <input type="text" id="subject" class="form-control" name="subject" id="title" placeholder="Title">
                         </div>
                         <div class="form-group">
-                            <label for="Message">Message:</label>
-                            <button type="button" class="btn btn-sm" id="markdown">Use Markdown</button>
-                            <button type="button" class="btn btn-sm" id="dropmarkdown" style="display: none;">Turn Off Markdown</button>
+                            <h4>
+                                <label for="Message">Message:</label>
+                                <button type="button" class="btn btn-secondary btn-sm" id="markdown">Use Markdown</button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="dropmarkdown" style="display: none;">Turn Off Markdown</button>
+                            </h3>
+                            
                             <textarea required class="form-control" rows="5" id="Message" type="text" name="body" placeholder="Message"></textarea>
                         </div>
-                        <button type="button" id="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Send</button>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="container-fluid navbar navbar-default bg-4 text-center page_row">
-        <p>GitHub: <a href="https://github.com/amosboldor">amosboldor</a></p>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script>
+        $('nav a[href="{{ request.current_route_url() }}"]').parent().addClass('active');
+    </script>
     {% if not request.authenticated_userid %}
     <script>
     var simplemde;

@@ -116,8 +116,8 @@ def home(request):
 def login(request):
     """Login View."""
     if request.method == 'POST':
-        username = request.params.get('Username', '')
-        password = request.params.get('Password', '')
+        username = request.params.get('username', '')
+        password = request.params.get('password', '')
         if check_credentials(username, password):
             headers = remember(request, username)
             return HTTPFound(location=request.route_url('posts'),
