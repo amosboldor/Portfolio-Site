@@ -381,3 +381,8 @@ fieldset[disabled] .btn-facebook.focus {
 .btn-freecodecamp > :first-child {
   font-size: 1.2em;
 }
+.footer > .container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: 'Lobster', cursive;
+}

@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link href="{{request.static_url('portfolio:static/theme.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{request.static_url('portfolio:static/font/css/open-iconic-bootstrap.min.css')}}"> {% block head %} {% endblock head %}
 </head>
@@ -22,7 +22,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <div class="form-inline my-2 my-lg-0">
-              <button type="button" class="btn btn-secondary btn-success align-middle" data-toggle="modal" data-target="#hireMe">Hire Me</button>
+                <button type="button" class="btn btn-secondary btn-success align-middle" data-toggle="modal" data-target="#hireMe">Hire Me</button>
             </div>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -49,6 +49,13 @@
             {% endif %}
     </nav>
     <br> {% block content %} {% endblock content %}
+    <br>
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">Overkill Is Underrated.</span>
+        </div>
+    </footer>
+
     <!-- Modal -->
     <div class="modal fade" id="hireMe" tabindex="-1" role="dialog" aria-labelledby="hireMeLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

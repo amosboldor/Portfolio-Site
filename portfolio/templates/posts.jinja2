@@ -25,11 +25,14 @@
     {% endif %}
     <div id="entries">
         {% for post in posts %}
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h2><a style="color: #2c3e50;" href="{{ request.route_url('detail', id=post.id) }}">{{ post.title }}</a></h2> Created: {{ post.date}}
+        <div class="card">
+            <img class="card-img-top" src="https://www.pixeden.com/media/k2/galleries/95/006-Infographic-vector-graph-pie-bar-chart-elements-stadistic.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">{{ post.title }}</h4>
+                <p class="card-text"><strong>Created: </strong><span class="text-info">{{ post.date}}</span></p>
+                <div class="panel-body">{{ post.summary|safe }}</div>
             </div>
-            <div class="panel-body">{{ post.summary|safe }}</div>
+            <a href="{{ request.route_url('detail', id=post.id) }}" class="btn btn-primary text-center">Read More</a>
         </div>
         {% endfor %}
     </div>
