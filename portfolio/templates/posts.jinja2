@@ -3,9 +3,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 {% endif %} {% endblock head %} {% block content %}
-<main class="container">
+<div class="container-fluid">
     {% if request.authenticated_userid %}
-    <br>
     <div id="add">
         <button type="button" class="btn btn-primary btn-block">Add</button>
         <br>
@@ -23,23 +22,47 @@
         </form>
     </div>
     {% endif %}
-    <div id="entries">
+    <div id="entries" class="row">
         {% for post in posts %}
-        <div class="card">
-            <img class="card-img-top" src="https://www.pixeden.com/media/k2/galleries/95/006-Infographic-vector-graph-pie-bar-chart-elements-stadistic.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h4 class="card-title">{{ post.title }}</h4>
-                <p class="card-text"><strong>Created: </strong><span class="text-info">{{ post.date}}</span></p>
-                <div class="panel-body">{{ post.summary|safe }}</div>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+            <div class="card">
+                <img class="card-img-top" src="https://www.pixeden.com/media/k2/galleries/95/006-Infographic-vector-graph-pie-bar-chart-elements-stadistic.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">{{ post.title }}</h4>
+                    <p class="card-text"><strong>Created: </strong><span class="text-info">{{ post.date}}</span></p>
+                    <div class="panel-body">{{ post.summary|safe }}</div>
+                </div>
+                <a href="{{ request.route_url('detail', id=post.id) }}" class="btn btn-primary text-center">Read More</a>
             </div>
-            <a href="{{ request.route_url('detail', id=post.id) }}" class="btn btn-primary text-center">Read More</a>
         </div>
         {% endfor %}
     </div>
-</main>
+</div>
 {% endblock %} {% block script %} {% if request.authenticated_userid %}
 <script type="text/javascript">
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
 $(document).ready(function() {
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
     var url_window = window.location.href
     var simplemde = new SimpleMDE();
     simplemde.value('<summary></summary>')
@@ -59,7 +82,7 @@ $(document).ready(function() {
     })
 
     function genPost(url, title, date, summary) {
-        return '<div class="panel panel-primary"><div class="panel-heading"><h2><a style="color: #2c3e50;" href="' + url + '">' + title + '</a></h2>Created: ' + date + '</div><div class="panel-body">' + summary + '</div></div>'
+        return '<div class="col-lg-4 col-md-6 col-xs-12"><div class="card"><img class="card-img-top" src="https://www.pixeden.com/media/k2/galleries/95/006-Infographic-vector-graph-pie-bar-chart-elements-stadistic.jpg" alt="Card image cap"><div class="card-body"><h4 class="card-title">{0}</h4><p class="card-text"><strong>Created: </strong><span class="text-info">{1}</span></p><div class="panel-body">{2}</div></div><a href="{3}" class="btn btn-primary text-center">Read More</a></div></div>'.format(title, date, summary, url);
     }
 
     var dateObj = new Date();
@@ -72,17 +95,20 @@ $(document).ready(function() {
         } else {
             $.ajax({
                 type: 'POST',
-                headers: { 'X-CSRF-Token': csrfToken },
+                headers: {
+                    'X-CSRF-Token': csrfToken
+                },
                 url: 'blog/create',
-                data: { "title": $('#Title').val(), "body": simplemde.value() },
+                data: {
+                    "title": $('#Title').val(),
+                    "body": simplemde.value()
+                },
                 success: function(resp) {
-                    var full_url = url_window + '/' + resp.id;
+                    var full_url = url_window + '/'
                     var title = $('#Title').val();
-                    var todaysDate = dateObj.toISOString().slice(0, 10);
+                    var todaysDate = formatDate(dateObj.toISOString());
                     var summary = $(simplemde.value()).html()
-
                     $("#entries").prepend(genPost(full_url, title, todaysDate, summary));
-
                     $('#Title').val('')
                     simplemde.value('<summary></summary>')
                     hidePostForm()

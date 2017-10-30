@@ -1,205 +1,289 @@
+#entries>.card {
+    padding-bottom: 1em;
+}
+
+
 /* Rules for sizing the icon. */
-.material-icons.md-18, .material-icons-text.md-18 { font-size: 18px; }
-.material-icons.md-24, .material-icons-text.md-24 { font-size: 24px; }
-.material-icons.md-36, .material-icons-text.md-36 { font-size: 36px; }
-.material-icons.md-48, .material-icons-text.md-48 { font-size: 48px; }
+
+.material-icons.md-18,
+.material-icons-text.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24,
+.material-icons-text.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36,
+.material-icons-text.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48,
+.material-icons-text.md-48 {
+    font-size: 48px;
+}
+
+
 
 /* Rules for using icons as black on a light background. */
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+.material-icons.md-dark {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.material-icons.md-dark.md-inactive {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+
 
 /* Rules for using icons as white on a dark background. */
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+}
+
+.material-icons.md-light.md-inactive {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+
+
 /* Social icons css boostrap-social: https://lipis.github.io/bootstrap-social/  */
+
 .btn-social {
-  position: relative;
-  padding-left: 44px;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    position: relative;
+    padding-left: 44px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.btn-social > :first-child {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 32px;
-  line-height: 34px;
-  font-size: 1.6em;
-  text-align: center;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+
+.btn-social> :first-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    line-height: 34px;
+    font-size: 1.6em;
+    text-align: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 .btn-social.btn-lg {
-  padding-left: 61px;
+    padding-left: 61px;
 }
-.btn-social.btn-lg > :first-child {
-  line-height: 45px;
-  width: 45px;
-  font-size: 1.8em;
+
+.btn-social.btn-lg> :first-child {
+    line-height: 45px;
+    width: 45px;
+    font-size: 1.8em;
 }
+
 .btn-social.btn-sm {
-  padding-left: 38px;
+    padding-left: 38px;
 }
-.btn-social.btn-sm > :first-child {
-  line-height: 28px;
-  width: 28px;
-  font-size: 1.4em;
+
+.btn-social.btn-sm> :first-child {
+    line-height: 28px;
+    width: 28px;
+    font-size: 1.4em;
 }
+
 .btn-social.btn-xs {
-  padding-left: 30px;
+    padding-left: 30px;
 }
-.btn-social.btn-xs > :first-child {
-  line-height: 20px;
-  width: 20px;
-  font-size: 1.2em;
+
+.btn-social.btn-xs> :first-child {
+    line-height: 20px;
+    width: 20px;
+    font-size: 1.2em;
 }
+
 .btn-social-icon {
-  position: relative;
-  padding-left: 44px;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 34px;
-  width: 34px;
-  padding: 0;
+    position: relative;
+    padding-left: 44px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 34px;
+    width: 34px;
+    padding: 0;
 }
-.btn-social-icon > :first-child {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 32px;
-  line-height: 34px;
-  font-size: 1.6em;
-  text-align: center;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
+
+.btn-social-icon> :first-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    line-height: 34px;
+    font-size: 1.6em;
+    text-align: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 .btn-social-icon.btn-lg {
-  padding-left: 61px;
+    padding-left: 61px;
 }
-.btn-social-icon.btn-lg > :first-child {
-  line-height: 45px;
-  width: 45px;
-  font-size: 1.8em;
+
+.btn-social-icon.btn-lg> :first-child {
+    line-height: 45px;
+    width: 45px;
+    font-size: 1.8em;
 }
+
 .btn-social-icon.btn-sm {
-  padding-left: 38px;
+    padding-left: 38px;
 }
-.btn-social-icon.btn-sm > :first-child {
-  line-height: 28px;
-  width: 28px;
-  font-size: 1.4em;
+
+.btn-social-icon.btn-sm> :first-child {
+    line-height: 28px;
+    width: 28px;
+    font-size: 1.4em;
 }
+
 .btn-social-icon.btn-xs {
-  padding-left: 30px;
+    padding-left: 30px;
 }
-.btn-social-icon.btn-xs > :first-child {
-  line-height: 20px;
-  width: 20px;
-  font-size: 1.2em;
+
+.btn-social-icon.btn-xs> :first-child {
+    line-height: 20px;
+    width: 20px;
+    font-size: 1.2em;
 }
-.btn-social-icon > :first-child {
-  border: none;
-  text-align: center;
-  width: 100% !important;
+
+.btn-social-icon> :first-child {
+    border: none;
+    text-align: center;
+    width: 100% !important;
 }
+
 .btn-social-icon.btn-lg {
-  height: 45px;
-  width: 45px;
-  padding-left: 0;
-  padding-right: 0;
+    height: 45px;
+    width: 45px;
+    padding-left: 0;
+    padding-right: 0;
 }
+
 .btn-social-icon.btn-sm {
-  height: 30px;
-  width: 30px;
-  padding-left: 0;
-  padding-right: 0;
+    height: 30px;
+    width: 30px;
+    padding-left: 0;
+    padding-right: 0;
 }
+
 .btn-social-icon.btn-xs {
-  height: 22px;
-  width: 22px;
-  padding-left: 0;
-  padding-right: 0;
+    height: 22px;
+    width: 22px;
+    padding-left: 0;
+    padding-right: 0;
 }
+
 .btn-github {
-  color: #fff;
-  background-color: #444;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #444;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-github:focus, .btn-github.focus {
-  color: #fff;
-  background-color: #2b2b2b;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-github:focus,
+.btn-github.focus {
+    color: #fff;
+    background-color: #2b2b2b;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-github:hover {
-  color: #fff;
-  background-color: #2b2b2b;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #2b2b2b;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-github:active, .btn-github.active, .open > .dropdown-toggle.btn-github {
-  color: #fff;
-  background-color: #2b2b2b;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-github:active,
+.btn-github.active,
+.open>.dropdown-toggle.btn-github {
+    color: #fff;
+    background-color: #2b2b2b;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-github:active:hover,
 .btn-github.active:hover,
-.open > .dropdown-toggle.btn-github:hover,
+.open>.dropdown-toggle.btn-github:hover,
 .btn-github:active:focus,
 .btn-github.active:focus,
-.open > .dropdown-toggle.btn-github:focus,
+.open>.dropdown-toggle.btn-github:focus,
 .btn-github:active.focus,
 .btn-github.active.focus,
-.open > .dropdown-toggle.btn-github.focus {
-  color: #fff;
-  background-color: #191919;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-github.focus {
+    color: #fff;
+    background-color: #191919;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-github:active, .btn-github.active, .open > .dropdown-toggle.btn-github {
-  background-image: none;
+
+.btn-github:active,
+.btn-github.active,
+.open>.dropdown-toggle.btn-github {
+    background-image: none;
 }
+
 .btn-github .badge {
-  color: #444;
-  background-color: #fff;
+    color: #444;
+    background-color: #fff;
 }
+
 .btn-twitter {
-  color: #fff;
-  background-color: #55acee;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #55acee;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-twitter:focus, .btn-twitter.focus {
-  color: #fff;
-  background-color: #2795e9;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-twitter:focus,
+.btn-twitter.focus {
+    color: #fff;
+    background-color: #2795e9;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-twitter:hover {
-  color: #fff;
-  background-color: #2795e9;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #2795e9;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-twitter:active, .btn-twitter.active, .open > .dropdown-toggle.btn-twitter {
-  color: #fff;
-  background-color: #2795e9;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-twitter:active,
+.btn-twitter.active,
+.open>.dropdown-toggle.btn-twitter {
+    color: #fff;
+    background-color: #2795e9;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-twitter:active:hover,
 .btn-twitter.active:hover,
-.open > .dropdown-toggle.btn-twitter:hover,
+.open>.dropdown-toggle.btn-twitter:hover,
 .btn-twitter:active:focus,
 .btn-twitter.active:focus,
-.open > .dropdown-toggle.btn-twitter:focus,
+.open>.dropdown-toggle.btn-twitter:focus,
 .btn-twitter:active.focus,
 .btn-twitter.active.focus,
-.open > .dropdown-toggle.btn-twitter.focus {
-  color: #fff;
-  background-color: #1583d7;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-twitter.focus {
+    color: #fff;
+    background-color: #1583d7;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-twitter:active, .btn-twitter.active, .open > .dropdown-toggle.btn-twitter {
-  background-image: none;
+
+.btn-twitter:active,
+.btn-twitter.active,
+.open>.dropdown-toggle.btn-twitter {
+    background-image: none;
 }
+
 .btn-twitter.disabled:hover,
 .btn-twitter[disabled]:hover,
 fieldset[disabled] .btn-twitter:hover,
@@ -209,53 +293,62 @@ fieldset[disabled] .btn-twitter:focus,
 .btn-twitter.disabled.focus,
 .btn-twitter[disabled].focus,
 fieldset[disabled] .btn-twitter.focus {
-  background-color: #55acee;
-  border-color: rgba(0, 0, 0, 0.2);
+    background-color: #55acee;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-twitter .badge {
-  color: #55acee;
-  background-color: #fff;
+    color: #55acee;
+    background-color: #fff;
 }
+
 .btn-linkedin {
-  color: #fff;
-  background-color: #007bb6;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #007bb6;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-linkedin:focus, .btn-linkedin.focus {
-  color: #fff;
-  background-color: #005983;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-linkedin:focus,
+.btn-linkedin.focus {
+    color: #fff;
+    background-color: #005983;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-linkedin:hover {
-  color: #fff;
-  background-color: #005983;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #005983;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-linkedin:active,
 .btn-linkedin.active,
-.open > .dropdown-toggle.btn-linkedin {
-  color: #fff;
-  background-color: #005983;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-linkedin {
+    color: #fff;
+    background-color: #005983;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-linkedin:active:hover,
 .btn-linkedin.active:hover,
-.open > .dropdown-toggle.btn-linkedin:hover,
+.open>.dropdown-toggle.btn-linkedin:hover,
 .btn-linkedin:active:focus,
 .btn-linkedin.active:focus,
-.open > .dropdown-toggle.btn-linkedin:focus,
+.open>.dropdown-toggle.btn-linkedin:focus,
 .btn-linkedin:active.focus,
 .btn-linkedin.active.focus,
-.open > .dropdown-toggle.btn-linkedin.focus {
-  color: #fff;
-  background-color: #00405f;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-linkedin.focus {
+    color: #fff;
+    background-color: #00405f;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-linkedin:active,
 .btn-linkedin.active,
-.open > .dropdown-toggle.btn-linkedin {
-  background-image: none;
+.open>.dropdown-toggle.btn-linkedin {
+    background-image: none;
 }
+
 .btn-linkedin.disabled:hover,
 .btn-linkedin[disabled]:hover,
 fieldset[disabled] .btn-linkedin:hover,
@@ -265,53 +358,62 @@ fieldset[disabled] .btn-linkedin:focus,
 .btn-linkedin.disabled.focus,
 .btn-linkedin[disabled].focus,
 fieldset[disabled] .btn-linkedin.focus {
-  background-color: #007bb6;
-  border-color: rgba(0, 0, 0, 0.2);
+    background-color: #007bb6;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-linkedin .badge {
-  color: #007bb6;
-  background-color: #fff;
+    color: #007bb6;
+    background-color: #fff;
 }
+
 .btn-facebook {
-  color: #fff;
-  background-color: #3b5998;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #3b5998;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-facebook:focus, .btn-facebook.focus {
-  color: #fff;
-  background-color: #2d4373;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-facebook:focus,
+.btn-facebook.focus {
+    color: #fff;
+    background-color: #2d4373;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-facebook:hover {
-  color: #fff;
-  background-color: #2d4373;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #2d4373;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-facebook:active,
 .btn-facebook.active,
-.open > .dropdown-toggle.btn-facebook {
-  color: #fff;
-  background-color: #2d4373;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-facebook {
+    color: #fff;
+    background-color: #2d4373;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-facebook:active:hover,
 .btn-facebook.active:hover,
-.open > .dropdown-toggle.btn-facebook:hover,
+.open>.dropdown-toggle.btn-facebook:hover,
 .btn-facebook:active:focus,
 .btn-facebook.active:focus,
-.open > .dropdown-toggle.btn-facebook:focus,
+.open>.dropdown-toggle.btn-facebook:focus,
 .btn-facebook:active.focus,
 .btn-facebook.active.focus,
-.open > .dropdown-toggle.btn-facebook.focus {
-  color: #fff;
-  background-color: #23345a;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-facebook.focus {
+    color: #fff;
+    background-color: #23345a;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-facebook:active,
 .btn-facebook.active,
-.open > .dropdown-toggle.btn-facebook {
-  background-image: none;
+.open>.dropdown-toggle.btn-facebook {
+    background-image: none;
 }
+
 .btn-facebook.disabled:hover,
 .btn-facebook[disabled]:hover,
 fieldset[disabled] .btn-facebook:hover,
@@ -321,68 +423,82 @@ fieldset[disabled] .btn-facebook:focus,
 .btn-facebook.disabled.focus,
 .btn-facebook[disabled].focus,
 fieldset[disabled] .btn-facebook.focus {
-  background-color: #3b5998;
-  border-color: rgba(0, 0, 0, 0.2);
+    background-color: #3b5998;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-facebook .badge {
-  color: #3b5998;
-  background-color: #fff;
+    color: #3b5998;
+    background-color: #fff;
 }
+
+
+
 /* ^^ Social icons css boostrap-social: https://lipis.github.io/bootstrap-social/ ^^ */
+
 .btn-social {
-  margin: 10px auto 10px auto;
-  width: 180px;
+    margin: 10px auto 10px auto;
+    width: 180px;
 }
 
 .btn-freecodecamp {
-  color: #fff;
-  background-color: #29b327;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #29b327;
+    border-color: rgba(0, 0, 0, 0.2);
 }
-.btn-freecodecamp:focus, .btn-freecodecamp.focus {
-  color: #fff;
-  background-color: #21901F;
-  border-color: rgba(0, 0, 0, 0.2);
+
+.btn-freecodecamp:focus,
+.btn-freecodecamp.focus {
+    color: #fff;
+    background-color: #21901F;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-freecodecamp:hover {
-  color: #fff;
-  background-color: #21901F;
-  border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #21901F;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-freecodecamp:active,
 .btn-freecodecamp.active,
-.open > .dropdown-toggle.btn-freecodecamp {
-  color: #fff;
-  background-color: #21901F;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-freecodecamp {
+    color: #fff;
+    background-color: #21901F;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-freecodecamp:active:hover,
 .btn-freecodecamp.active:hover,
-.open > .dropdown-toggle.btn-freecodecamp:hover,
+.open>.dropdown-toggle.btn-freecodecamp:hover,
 .btn-freecodecamp:active:focus,
 .btn-freecodecamp.active:focus,
-.open > .dropdown-toggle.btn-freecodecamp:focus,
+.open>.dropdown-toggle.btn-freecodecamp:focus,
 .btn-freecodecamp:active.focus,
 .btn-freecodecamp.active.focus,
-.open > .dropdown-toggle.btn-freecodecamp.focus {
-  color: #fff;
-  background-color: #21901F;
-  border-color: rgba(0, 0, 0, 0.2);
+.open>.dropdown-toggle.btn-freecodecamp.focus {
+    color: #fff;
+    background-color: #21901F;
+    border-color: rgba(0, 0, 0, 0.2);
 }
+
 .btn-freecodecamp:active,
 .btn-freecodecamp.active,
-.open > .dropdown-toggle.btn-freecodecamp {
-  background-image: none;
+.open>.dropdown-toggle.btn-freecodecamp {
+    background-image: none;
 }
+
 .btn-freecodecamp .badge {
-  color: #29b327;
-  background-color: #fff;
+    color: #29b327;
+    background-color: #fff;
 }
-.btn-freecodecamp > :first-child {
-  font-size: 1.2em;
+
+.btn-freecodecamp> :first-child {
+    font-size: 1.2em;
 }
-.footer > .container {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-family: 'Lobster', cursive;
+
+.footer>.container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: 'Lobster', cursive;
 }
