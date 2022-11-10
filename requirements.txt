@@ -5,9 +5,9 @@ html2text==2016.9.19
 html5lib==0.999999999
 hupper==0.4.2
 ipdb==0.10.2
-ipython==5.3.0
+ipython==7.16.3
 ipython-genutils==0.1.0
-Jinja2==2.9.5
+Jinja2==2.11.3
 Mako==1.0.6
 Markdown==2.6.8
 MarkupSafe==1.0
@@ -20,7 +20,7 @@ pickleshare==0.7.4
 prompt-toolkit==1.0.13
 psycopg2==2.7
 ptyprocess==0.5.1
-Pygments==2.2.0
+Pygments==2.7.4
 pyparsing==2.2.0
 pyramid==1.8.2
 pyramid-debugtoolbar==3.0.5
@@ -34,7 +34,7 @@ repoze.lru==0.6
 repoze.sendmail==4.3
 simplegeneric==0.8.1
 six==1.10.0
-SQLAlchemy==1.1.6
+SQLAlchemy==1.2.18
 traitlets==4.3.2
 transaction==2.1.0
 translationstring==1.3
